@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Pede Ajuda - Encontre profissionais de manutenção perto de você">
+    <title>Pede Ajuda - Serviços de Manutenção</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: #BFA181;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+
+
+        header.header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px 40px;
+            background-color: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .header-logo-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo {
+            width: 300px;
+            height: auto;
+        }
+
+        .logo-secondary {
+            width: 310px;
+            height: auto;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .nav-menu a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 1000;
+            font-size: 18px;
+            transition: color 0.3s ease;
+            padding: 8px 12px;
+            border-radius: 5px;
+        }
+
+        .nav-menu a:hover {
+            color: #ff6b00;
+            background-color: rgba(255, 107, 0, 0.1);
+        }
+
+
+        .hero-section {
+            text-align: center;
+            padding: 60px 20px;
+            background: linear-gradient(135deg, rgba(255, 107, 0, 0.05) 0%, rgba(191, 161, 129, 0.1) 100%);
+        }
+
+        .hero-section h1 {
+            font-size: 42px;
+            color: #333;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .hero-section h2 {
+            font-size: 22px;
+            color: #666;
+            margin-bottom: 40px;
+            font-weight: 400;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+
+        .btn {
+            padding: 14px 40px;
+            font-size: 16px;
+            font-weight: 600;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .btn-primary {
+            background-color: #ff6b00;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #e55a00;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 107, 0, 0.3);
+        }
+
+        .btn-secondary {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background-color: #45a049;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(76, 175, 80, 0.3);
+        }
+
+
+        .services-section {
+            padding: 80px 20px;
+            background-color: #f8f8f8;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 50px;
+            color: #333;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background-color: #ff6b00;
+            margin: 15px auto 0;
+            border-radius: 2px;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .service-card {
+            background: white;
+            padding: 40px 30px;
+            border-radius: 12px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            border-top: 4px solid #ff6b00;
+        }
+
+        .service-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .service-card h3 {
+            color: #ff6b00;
+            margin-bottom: 15px;
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        .service-card p {
+            color: #666;
+            font-size: 14px;
+            line-height: 1.8;
+        }
+
+
+        .cta-section {
+            text-align: center;
+            padding: 80px 20px;
+            background: linear-gradient(135deg, #ff6b00 0%, #ff8533 100%);
+            color: white;
+        }
+
+        .cta-section h1 {
+            font-size: 40px;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .cta-section h2 {
+            font-size: 20px;
+            margin-bottom: 40px;
+            font-weight: 400;
+            opacity: 0.95;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            font-size: 14px;
+        }
+
+
+        @media (max-width: 768px) {
+            header.header {
+                padding: 15px 20px;
+            }
+
+            .logo {
+                width: 200px;
+
+            }
+
+            .logo-secondary {
+                width: 220px;
+            }
+
+            .nav-menu {
+                gap: 20px;
+                font-size: 12px;
+                flex-basis: 100%;
+                justify-content: center;
+            }
+
+            .hero-section h1 {
+                font-size: 28px;
+            }
+
+            .hero-section h2 {
+                font-size: 16px;
+            }
+
+            .section-title {
+                font-size: 28px;
+            }
+
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .cta-section h1 {
+                font-size: 28px;
+            }
+
+            .cta-section h2 {
+                font-size: 16px;
+            }
+
+
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- HEADER -->
+    <header class="header">
+        <div class="header-logo-container">
+            <img src="LOGOSFUNDO.PNG" alt="Logo Pede Ajuda" class="logo">
+
+        </div>
+        <nav class="nav-menu">
+            <a href="#serv">Conheça os Serviços</a>
+            <a href="SolicitarServiços.html">Solicitar Serviços</a>
+            <a href="Profissional.html">Profissionais</a>
+        </nav>
+    </header>
+
+    <!-- SEÇÃO HERO -->
+    <section class="hero-section">
+        <h1>Encontre Profissionais perto de você</h1>
+        <h2>Solicite serviços de manutenção com rapidez, segurança e avaliações reais dos profissionais.</h2>
+        <button class="btn btn-primary" onclick="window.location.href='SolicitarServiços.html'"">Pedir Ajuda</button>
+    </section>
+
+    <!-- SEÇÃO DE SERVIÇOS DISPONÍVEIS -->
+    <section class="services-section" id="serv">
+        <h2 class="section-title">Serviços Disponíveis</h2>
+
+        <div class="services-grid">
+            <div class="service-card">
+                <h3>💻 Técnico em Informática</h3>
+                <p>Formatação, manutenção e suporte para computadores e notebooks.</p>
+            </div>
+            <div class="service-card">
+                <h3>🔌 Eletricista</h3>
+                <p>Instalações elétricas, tomadas, chuveiros e manutenção.</p>
+            </div>
+
+            <div class="service-card">
+                <h3>❄️ Refrigeração</h3>
+                <p>Conserto e instalação de ar-condicionado e geladeiras.</p>
+            </div>
+
+            <div class="service-card">
+                <h3>🎨 Pintura</h3>
+                <p>Pintura residencial e comercial com acabamento profissional.</p>
+            </div>
+
+            <div class="service-card">
+                <h3>🚿 Encanador</h3>
+                <p>Vazamentos, manutenção hidráulica e instalação de torneiras.</p>
+            </div>
+            <div class="service-card">
+                <h3>📶 Técnico em Internet/Wi-Fi</h3>
+                <p>Instalação, configuração de roteadores e solução de problemas de conexão.</p>
+            </div>
+            <div class="service-card">
+                <h3>🪑 Montador de Móveis</h3>
+                <p>Montagem e desmontagem de móveis residenciais e corporativos.</p>
+            </div>
+            <div class="service-card">
+                <h3>🔑 Chaveiro</h3>
+                <p>Abertura de portas, cópia de chaves e troca de fechaduras.</p>
+            </div>
+            <div class="service-card">
+                <h3>🧼 Serviços de Limpeza</h3>
+                <p>Limpeza residencial, comercial e pós-obra com qualidade e organização.</p>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- SEÇÃO CALL-TO-ACTION PARA PROFISSIONAIS -->
+    <section class="cta-section">
+        <h1>Você quer fazer parte de nossa equipe?</h1>
+        <h2>Se você é um profissional da área manual, tente ser aprovado para fazer parte do Pede Ajuda!</h2>
+        <button class="btn btn-secondary" onclick="window.location.href='Profissional.html'">Cadastre-se</button>
+    </section>
+    <footer>
+        © 2026 Pede Ajuda - Todos os direitos reservados.
+    </footer>
+</body>
+
+</html>
