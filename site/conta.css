@@ -1,0 +1,464 @@
+/* ================================================================
+   CONTA.CSS — Sistema de Conta & Login | Pede Ajuda
+   ================================================================ */
+
+/* ------ ÍCONE DE CONTA NO HEADER ------ */
+.conta-btn {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 4rem;
+    height: 4rem;
+    border-radius: 99px;
+    background: rgba(255, 122, 26, 0.08);
+    border: 1.5px solid rgba(255, 122, 26, 0.2);
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    flex-shrink: 0;
+    text-decoration: none;
+}
+
+.conta-btn:hover {
+    background: linear-gradient(135deg, #FF8F3D 0%, #FF6B00 100%);
+    border-color: transparent;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(230, 92, 0, 0.3);
+}
+
+.conta-btn svg {
+    width: 1.8rem;
+    height: 1.8rem;
+    stroke: #E65C00;
+    stroke-width: 2;
+    fill: none;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    transition: stroke 0.2s ease;
+    flex-shrink: 0;
+}
+
+.conta-btn:hover svg {
+    stroke: #ffffff;
+}
+
+/* Badge de logado */
+.conta-btn.logado::after {
+    content: '';
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    width: 0.75rem;
+    height: 0.75rem;
+    background: #2E7D32;
+    border-radius: 50%;
+    border: 2px solid #fcf9f5;
+}
+
+/* ------ OVERLAY BACKDROP ------ */
+.modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(35, 28, 25, 0.55);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    z-index: 9000;
+    align-items: center;
+    justify-content: center;
+    padding: 1.6rem;
+    animation: fadeInOverlay 0.25s ease;
+}
+
+.modal-overlay.active {
+    display: flex;
+}
+
+@keyframes fadeInOverlay {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+/* ------ MODAL CARD ------ */
+.modal-card {
+    background: #ffffff;
+    border-radius: 28px;
+    width: 100%;
+    max-width: 46rem;
+    box-shadow: 0 30px 80px rgba(35, 28, 25, 0.18), 0 6px 20px rgba(35, 28, 25, 0.06);
+    overflow: hidden;
+    animation: slideUpModal 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    position: relative;
+}
+
+@keyframes slideUpModal {
+    from { opacity: 0; transform: translateY(28px) scale(0.97); }
+    to   { opacity: 1; transform: translateY(0)    scale(1);    }
+}
+
+/* ------ TABS ------ */
+.modal-tabs {
+    display: flex;
+    background: #F7EFE5;
+    border-bottom: 1px solid rgba(230, 92, 0, 0.1);
+}
+
+.modal-tab {
+    flex: 1;
+    padding: 1.6rem 2rem;
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #8A7A74;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    letter-spacing: -0.1px;
+    transition: all 0.25s ease;
+    position: relative;
+}
+
+.modal-tab.active {
+    color: #E65C00;
+    background: #ffffff;
+}
+
+.modal-tab.active::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(135deg, #FF7A1A, #E65C00);
+}
+
+/* ------ CLOSE BUTTON ------ */
+.modal-close {
+    position: absolute;
+    top: 1.4rem;
+    right: 1.6rem;
+    width: 3.2rem;
+    height: 3.2rem;
+    border-radius: 50%;
+    border: none;
+    background: rgba(35, 28, 25, 0.06);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.6rem;
+    color: #5C4E48;
+    line-height: 1;
+    transition: all 0.2s ease;
+    z-index: 10;
+}
+
+.modal-close:hover {
+    background: rgba(230, 92, 0, 0.08);
+    color: #E65C00;
+    transform: rotate(90deg);
+}
+
+/* ------ MODAL BODY ------ */
+.modal-body {
+    padding: 3.3rem 3.6rem 3.3rem 3.6rem;
+}
+
+.modal-panel {
+    display: none;
+}
+
+.modal-panel.active {
+    display: block;
+    animation: fadePanel 0.2s ease;
+}
+
+@keyframes fadePanel {
+    from { opacity: 0; transform: translateY(6px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ------ TÍTULOS DO MODAL ------ */
+.modal-title {
+    font-size: 2rem;
+    font-weight: 800;
+    color: #231C19;
+    margin: 0 0 0.5rem 0;
+    letter-spacing: -0.6px;
+}
+
+.modal-title span {
+    background: linear-gradient(135deg, #FF7A1A 0%, #E65C00 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.modal-subtitle {
+    font-size: 1.15rem;
+    color: #6B5E59;
+    margin: 0 0 2.5rem 0;
+    font-weight: 400;
+}
+
+/* ------ CAMPOS DO FORMULÁRIO ------ */
+.field-group {
+    margin-bottom: 1.6rem;
+}
+
+.field-group label {
+    display: block;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #5C4E48;
+    margin-bottom: 0.6rem;
+    letter-spacing: -0.1px;
+}
+
+.field-group input,
+.field-group select {
+    width: 100%;
+    padding: 1.1rem 1.5rem;
+    border-radius: 12px;
+    border: 1.5px solid #D6C7BC;
+    background: #fff;
+    font-size: 1.1rem;
+    color: #231C19;
+    outline: none;
+    font-family: inherit;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.field-group input:focus,
+.field-group select:focus {
+    border-color: #E65C00;
+    box-shadow: 0 0 0 4px rgba(255, 122, 26, 0.12);
+}
+
+.field-group input.erro {
+    border-color: #C62828;
+    box-shadow: 0 0 0 4px rgba(198, 40, 40, 0.1);
+}
+
+.campo-erro-msg {
+    font-size: 0.95rem;
+    color: #C62828;
+    margin-top: 0.4rem;
+    display: none;
+}
+
+.campo-erro-msg.visivel {
+    display: block;
+}
+
+/* ------ BOTÃO SUBMIT MODAL ------ */
+.modal-submit {
+    width: 100%;
+    padding: 1.3rem;
+    background: linear-gradient(135deg, #FF7A1A 0%, #E65C00 100%);
+    color: #ffffff;
+    border: none;
+    border-radius: 99px;
+    font-size: 1.15rem;
+    font-weight: 700;
+    cursor: pointer;
+    letter-spacing: 0.6px;
+    text-transform: uppercase;
+    box-shadow: 0 6px 25px rgba(230, 92, 0, 0.25);
+    margin-top: 0.8rem;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.modal-submit:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(230, 92, 0, 0.35);
+}
+
+.modal-submit:active {
+    transform: translateY(0);
+}
+
+.modal-submit:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* ------ LINK TROCAR ABA ------ */
+.trocar-aba {
+    text-align: center;
+    margin-top: 1.8rem;
+    font-size: 1.1rem;
+    color: #6B5E59;
+}
+
+.trocar-aba a {
+    color: #E65C00;
+    font-weight: 700;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.trocar-aba a:hover {
+    text-decoration: underline;
+}
+
+/* ------ PAINEL LOGADO ------ */
+.perfil-panel {
+    text-align: center;
+}
+
+.perfil-avatar {
+    width: 7rem;
+    height: 7rem;
+    background: linear-gradient(135deg, #FF8F3D 0%, #E65C00 100%);
+    border-radius: 50%;
+    margin: 0 auto 1.6rem auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.8rem;
+    font-weight: 800;
+    color: #ffffff;
+    letter-spacing: -1px;
+    box-shadow: 0 8px 25px rgba(230, 92, 0, 0.25);
+}
+
+.perfil-nome {
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: #231C19;
+    margin: 0 0 0.3rem 0;
+    letter-spacing: -0.4px;
+}
+
+.perfil-email {
+    font-size: 1.1rem;
+    color: #8A7A74;
+    margin: 0 0 0.5rem 0;
+}
+
+.perfil-area {
+    display: inline-block;
+    background: rgba(255, 122, 26, 0.1);
+    color: #E65C00;
+    font-size: 1rem;
+    font-weight: 700;
+    padding: 0.4rem 1.2rem;
+    border-radius: 99px;
+    margin-bottom: 2.5rem;
+    letter-spacing: 0.3px;
+}
+
+.perfil-info-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    text-align: left;
+}
+
+.perfil-info-item {
+    background: #F7EFE5;
+    border-radius: 14px;
+    padding: 1.1rem 1.4rem;
+}
+
+.perfil-info-item .info-label {
+    font-size: 0.9rem;
+    color: #8A7A74;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 0.3rem;
+}
+
+.perfil-info-item .info-value {
+    font-size: 1.1rem;
+    color: #231C19;
+    font-weight: 600;
+}
+
+.perfil-full {
+    grid-column: 1 / -1;
+}
+
+.btn-logout {
+    width: 100%;
+    padding: 1.1rem;
+    background: transparent;
+    color: #C62828;
+    border: 1.5px solid rgba(198, 40, 40, 0.3);
+    border-radius: 99px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    cursor: pointer;
+    letter-spacing: 0.3px;
+    transition: all 0.25s ease;
+}
+
+.btn-logout:hover {
+    background: rgba(198, 40, 40, 0.05);
+    border-color: #C62828;
+    transform: translateY(-1px);
+}
+
+/* ------ TOAST NOTIFICATION ------ */
+.toast {
+    position: fixed;
+    top: 2.4rem;
+    left: 50%;
+    transform: translateX(-50%) translateY(-10px);
+    padding: 1.2rem 2.6rem;
+    border-radius: 99px;
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: #fff;
+    z-index: 99999;
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    white-space: nowrap;
+    font-family: system-ui, sans-serif;
+    box-shadow: 0 10px 30px rgba(35, 28, 25, 0.18);
+}
+
+.toast.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+}
+
+.toast.sucesso { background: #2E7D32; }
+.toast.erro    { background: #C62828; }
+.toast.info    { background: #1565C0; }
+
+/* ------ DIVISOR ------ */
+.divisor {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin: 1.8rem 0;
+    color: #B0A09A;
+    font-size: 0.95rem;
+    font-weight: 500;
+}
+
+.divisor::before,
+.divisor::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: #EFE4DA;
+}
+
+/* ------ RESPONSIVO ------ */
+@media (max-width: 768px) {
+    .modal-body {
+        padding: 2.5rem 2rem;
+    }
+    .perfil-info-grid {
+        grid-template-columns: 1fr;
+    }
+    .modal-card {
+        border-radius: 20px;
+    }
+}

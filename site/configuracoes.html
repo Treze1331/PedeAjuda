@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Pede Ajuda - Painel de Configurações Avançadas">
+    <title>Pede Ajuda - Configurações</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="conta.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-html: #ffe0ce50;
+            --bg-body: #ffe0ce50;
+            --bg-card: #FFFFFF;
+            --bg-input: #FBF9F6;
+            --text-main: #231C19;
+            --text-muted: #7A6961;
+            --header-bg: rgba(252, 249, 245, 0.85);
+            --border-color: rgba(230, 92, 0, 0.08);
+            --card-wrapper-bg: #F7EFE5;
+            --input-border: rgba(230, 92, 0, 0.15);
+            --dropdown-bg: #FFFFFF;
+            --sidebar-active: #FFF0E6;
+            --accent-color: #E65C00;
+            --toast-bg: #231C19;
+            --toast-text: #FFFFFF;
+            --danger-color: #C62828;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            font-size: 65%; 
+            background-color: var(--bg-html);
+        }
+
+        body {
+            background-color: var(--bg-body); 
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            line-height: 1.6;
+            color: var(--text-main); 
+            -webkit-font-smoothing: antialiased;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* HEADER */
+        header.header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0px 68px; 
+            background-color: var(--header-bg); 
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 2px solid rgba(255, 122, 26, 0.15); 
+            box-shadow: 0 4px 20px rgba(35, 28, 25, 0.03);
+        }
+
+        .header-logo-container { display: flex; align-items: center; }
+        .logo { width: 136px; height: auto; display: block; transition: transform 0.2s; }
+        .logo:hover { transform: scale(1.02); }
+        .nav-menu { display: flex; gap: 1.2rem; align-items: center; }
+        
+        .nav-menu a {
+            text-decoration: none;
+            color: var(--text-muted);
+            font-weight: 600;
+            font-size: 1.25rem;
+            padding: 0.8rem 1.6rem;
+            border-radius: 99px;
+            transition: all 0.3s;
+        }
+        .nav-menu a[href="index.html#serv"]:hover,
+        .nav-menu a[href="SolicitarServiços.html"]:hover,
+        .nav-menu a[href="ProfissionaisDisponiveis.html"]:hover {
+            background: linear-gradient(135deg, #FF8F3D 0%, #FF6B00 100%);
+            color: #ffffff;
+            box-shadow: 0 6px 20px rgba(230, 92, 0, 0.3);
+        }
+
+        /* 🛠️ DROPDOWN DO USUÁRIO CORRIGIDO */
+        .user-dropdown { position: relative; display: inline-block; }
+        
+        .user-btn {
+            background: transparent; /* Corrigido: Removido o '38px' inválido */
+            border: 1px solid var(--input-border);
+            border-radius: 50%;
+            width: 38px;
+            height: 38px;
+            cursor: pointer;
+            display: flex; 
+            align-items: center; 
+            justify-content: center;
+            padding: 0; /* Garante que nenhum padding interno desalinhe o ícone */
+            overflow: hidden; /* Mantém as bordas perfeitamente redondas */
+        }
+
+        .user-initials {
+            font-size: 1.4rem; 
+            font-weight: 800; 
+            color: #FFFFFF;
+            background: linear-gradient(135deg, #FF7A1A 0%, #E65C00 100%);
+            width: 100%; 
+            height: 100%; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            border-radius: 50%;
+        }
+
+        .dropdown-content {
+            display: none; position: absolute; right: 0; background-color: var(--dropdown-bg);
+            min-width: 160px; box-shadow: 0 10px 30px rgba(35, 28, 25, 0.12);
+            border: 1px solid var(--border-color); border-radius: 16px; padding: 0.8rem 0; z-index: 1100; margin-top: 8px;
+        }
+        .dropdown-content.active { display: block; }
+        .dropdown-content a {
+            color: var(--text-main) !important; padding: 1rem 1.6rem !important;
+            font-size: 1.2rem !important; font-weight: 500 !important; text-align: left;
+        }
+        .dropdown-content a:hover { background-color: var(--sidebar-active) !important; color: var(--accent-color) !important; }
+        #linkSair { color: var(--danger-color) !important; border-top: 1px solid var(--border-color); margin-top: 4px; }
+
+        /* LAYOUT EM ABAS */
+        .panel-container {
+            max-width: 110rem;
+            margin: 5rem auto;
+            display: grid;
+            grid-template-columns: 28rem 1fr;
+            gap: 4rem;
+            padding: 0 2rem;
+        }
+
+        .sidebar-menu { display: flex; flex-direction: column; gap: 0.5rem; }
+        
+        .sidebar-btn {
+            background: transparent; border: none; text-align: left; padding: 1.4rem 2rem;
+            font-size: 1.35rem; font-weight: 600; color: var(--text-muted); border-radius: 12px;
+            cursor: pointer; transition: all 0.2s; display: flex; align-items: center; gap: 1.2rem;
+        }
+        .sidebar-btn:hover { background-color: var(--border-color); color: var(--text-main); }
+        .sidebar-btn.active { background-color: var(--sidebar-active); color: var(--accent-color); }
+
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        .panel-header { margin-bottom: 3rem; }
+        .panel-header h1 { font-size: 3rem; font-weight: 800; letter-spacing: -1px; margin-bottom: 0.5rem; }
+        .panel-header p { font-size: 1.4rem; color: var(--text-muted); }
+
+        .config-card {
+            background: var(--bg-card); border: 1px solid var(--border-color);
+            border-radius: 20px; padding: 2.5rem 3rem; box-shadow: 0 4px 30px rgba(0, 0, 0, 0.01);
+            margin-bottom: 2rem;
+        }
+
+        .config-row {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 1.8rem 0; border-bottom: 1px solid var(--border-color);
+        }
+        .config-row:last-child { border-bottom: none; padding-bottom: 0; }
+        .config-info h3 { font-size: 1.4rem; font-weight: 600; margin-bottom: 0.4rem; }
+        .config-info p { font-size: 1.2rem; color: var(--text-muted); }
+
+        /* FORMULÁRIOS DINÂMICOS */
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+        .form-group { margin-bottom: 2rem; }
+        .form-group.full-width { grid-column: span 2; }
+        .form-group label { display: block; font-size: 1.25rem; font-weight: 600; margin-bottom: 0.8rem; }
+        .form-control {
+            width: 100%; padding: 1.2rem 1.6rem; font-size: 1.3rem; border-radius: 10px;
+            border: 1px solid var(--input-border); background-color: var(--bg-input); color: var(--text-main); outline: none;
+            transition: all 0.2s;
+        }
+        .form-control:focus {
+            border-color: var(--accent-color);
+            background-color: var(--bg-card);
+            box-shadow: 0 0 0 4px rgba(230, 92, 0, 0.08);
+        }
+
+        /* TOGGLE SWITCH */
+        .switch { position: relative; display: inline-block; width: 48px; height: 24px; }
+        .switch input { opacity: 0; width: 0; height: 0; }
+        .slider {
+            position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0;
+            background-color: #ccc; transition: .3s; border-radius: 34px;
+        }
+        .slider:before {
+            position: absolute; content: ""; height: 18px; width: 18px; left: 3px; bottom: 3px;
+            background-color: white; transition: .3s; border-radius: 50%;
+        }
+        input:checked + .slider { background: linear-gradient(135deg, #FF7A1A 0%, #E65C00 100%); }
+        input:checked + .slider:before { transform: translateX(24px); }
+
+        .btn-salvar {
+            background: linear-gradient(135deg, #FF7A1A 0%, #E65C00 100%);
+            color: #FFFFFF; padding: 1.2rem 3.5rem; font-size: 1.2rem; font-weight: 700;
+            border: none; border-radius: 99px; cursor: pointer; transition: all 0.2s;
+            text-transform: uppercase; letter-spacing: 0.5px;
+        }
+        .btn-salvar:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(230, 92, 0, 0.4); }
+
+        /* LOGS DE DISPOSITIVOS */
+        .log-item {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 1.2rem 1.5rem; background: var(--bg-input); border-radius: 10px; margin-bottom: 1rem;
+            border-left: 3px solid var(--accent-color);
+        }
+        .log-meta { font-size: 1.2rem; font-weight: 600; }
+        .log-date { font-size: 1.1rem; color: var(--text-muted); }
+
+        /* TOAST NOTIFICATION */
+        .toast-container { position: fixed; bottom: 30px; right: 30px; z-index: 2000; display: flex; flex-direction: column; gap: 10px; }
+        .toast-card {
+            background: var(--toast-bg); color: var(--toast-text); padding: 1.6rem 2.8rem; border-radius: 12px;
+            font-size: 1.3rem; font-weight: 600; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            display: flex; align-items: center; gap: 1.2rem; transform: translateY(100px); opacity: 0; transition: all 0.4s;
+        }
+        .toast-card.show { transform: translateY(0); opacity: 1; }
+
+        /* MODAL DE SEGURANÇA CHIQUE */
+        .security-backdrop {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            background: rgba(24, 20, 18, 0.6); backdrop-filter: blur(8px);
+            z-index: 3000; display: flex; align-items: center; justify-content: center;
+            opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
+        }
+        .security-backdrop.active { opacity: 1; pointer-events: auto; }
+        
+        .security-modal {
+            background: var(--bg-card); border: 1px solid var(--border-color);
+            padding: 3.5rem; border-radius: 24px; max-width: 42rem; width: 90%;
+            text-align: center; box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+            transform: scale(0.9); transition: transform 0.3s ease;
+        }
+        .security-backdrop.active .security-modal { transform: scale(1); }
+        
+        .security-icon {
+            font-size: 4.5rem; margin-bottom: 1.5rem; display: inline-block;
+            animation: pulse 2s infinite;
+        }
+        .security-modal h2 { font-size: 2.2rem; font-weight: 800; margin-bottom: 1rem; color: var(--danger-color); }
+        .security-modal p { font-size: 1.4rem; color: var(--text-muted); margin-bottom: 2.5rem; }
+        
+        .btn-modal-redirect {
+            background: var(--danger-color); color: #fff; border: none; padding: 1.2rem 3rem;
+            font-size: 1.3rem; font-weight: 700; border-radius: 99px; cursor: pointer; width: 100%;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        footer { background-color: #231C19; color: #D6C7BC; text-align: center; padding: 3.3rem 1.6rem; font-size: 1.1rem; border-top: 3px solid #FF7A1A; margin-top: 10rem; }
+
+        @media(max-width: 768px) {
+            .panel-container { grid-template-columns: 1fr; gap: 2rem; }
+            .form-grid { grid-template-columns: 1fr; }
+            .form-group.full-width { grid-column: unset; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Modal de bloqueio de segurança -->
+    <div class="security-backdrop" id="securityModal">
+        <div class="security-modal">
+            <span class="security-icon">🔒</span>
+            <h2>Acesso Restrito</h2>
+            <p>Você precisa estar conectado à sua conta para gerenciar as configurações do sistema.</p>
+            <button class="btn-modal-redirect" onclick="irParaLogin()">Fazer Login</button>
+        </div>
+    </div>
+
+    <div class="toast-container" id="toastContainer"></div>
+
+    <header class="header">
+        <div class="header-logo-container">
+            <a href="index.html"><img src="logosite.PNG" alt="Logo Pede Ajuda" class="logo"></a>
+        </div>
+        <nav class="nav-menu">
+            <a href="index.html#serv">Conheça os Serviços</a>
+            <a href="SolicitarServiços.html">Solicitar Serviços</a>
+            <a href="ProfissionaisDisponiveis.html">Profissionais</a>
+            
+            <div class="user-dropdown">
+                <!-- 🛠️ CORREÇÃO HTML: Removido a div interna 'userBtnContent' para evitar conflito de empilhamento de flexbox -->
+                <button class="user-btn" id="userBtnMenu" type="button"></button>
+                <div class="dropdown-content" id="userDropdownContent">
+                    <a href="minhaconta.html">Minha Conta</a>
+                    <a href="configuracoes.html">Configurações</a>
+                    <a href="#" id="linkSair">Sair</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="panel-container">
+        <aside class="sidebar-menu">
+            <button class="sidebar-btn active" onclick="switchTab('perfil', event)">👤 Dados do Perfil</button>
+            <button class="sidebar-btn" onclick="switchTab('privacidade', event)">🛡️ Privacidade & Dados</button>
+            <button class="sidebar-btn" onclick="switchTab('notificacoes', event)">🔔 Alertas e Avisos</button>
+            <button class="sidebar-btn" onclick="switchTab('seguranca', event)">🔑 Histórico de Acesso</button>
+        </aside>
+
+        <main class="content-area">
+            
+            <!-- ABA 1: MEU PERFIL -->
+            <div id="aba-perfil" class="tab-content active">
+                <div class="panel-header">
+                    <h1>Dados do Perfil</h1>
+                    <p>Mantenha suas credenciais e localização atualizadas para o recebimento de chamados.</p>
+                </div>
+                <div class="config-card">
+                    <div class="form-grid">
+                        <div class="form-group full-width">
+                            <label>Nome Completo</label>
+                            <input type="text" class="form-control" id="inputNomeUser" readonly style="opacity: 0.7; cursor: not-allowed;">
+                        </div>
+                        <div class="form-group full-width">
+                            <label>Endereço de E-mail</label>
+                            <input type="email" class="form-control" id="inputEmail" placeholder="exemplo@pedeajuda.com">
+                        </div>
+                        <div class="form-group">
+                            <label>Cidade Atual</label>
+                            <input type="text" class="form-control" id="inputCidade" placeholder="Ex: Rio de Janeiro">
+                        </div>
+                        <div class="form-group">
+                            <label>Telefone / Celular</label>
+                            <input type="text" class="form-control" id="inputTelefone" placeholder="(00) 00000-0000" maxlength="15">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ABA 2: PRIVACIDADE -->
+            <div id="aba-privacidade" class="tab-content">
+                <div class="panel-header">
+                    <h1>Privacidade & LGPD</h1>
+                    <p>Controle como os profissionais parceiros visualizam seus dados de contato.</p>
+                </div>
+                <div class="config-card">
+                    <div class="config-row">
+                        <div class="config-info">
+                            <h3>Ocultar telefone para buscas diretas</h3>
+                            <p>Seu número só será exibido após a confirmação de aceite de prestação de serviço.</p>
+                        </div>
+                        <label class="switch">
+                            <input type="checkbox" id="togglePrivacidadeTel" checked>
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                    <div class="config-row">
+                        <div class="config-info">
+                            <h3>Compartilhamento Analítico</h3>
+                            <p>Permitir coleta de cookies otimizados para melhorar as sugestões de profissionais na sua região.</p>
+                        </div>
+                        <label class="switch">
+                            <input type="checkbox" id="toggleCookies" checked>
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ABA 3: NOTIFICAÇÕES -->
+            <div id="aba-notificacoes" class="tab-content">
+                <div class="panel-header">
+                    <h1>Alertas e Avisos</h1>
+                    <p>Configure as comunicações instantâneas do ecossistema.</p>
+                </div>
+                <div class="config-card">
+                    <div class="config-row">
+                        <div class="config-info">
+                            <h3>Alertas de chamados via e-mail</h3>
+                            <p>Receber alertas em tempo real quando sua solicitação for respondida por um técnico.</p>
+                        </div>
+                        <label class="switch">
+                            <input type="checkbox" id="toggleNotifPedidos" checked>
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ABA 4: HISTÓRICO DE ACESSO -->
+            <div id="aba-seguranca" class="tab-content">
+                <div class="panel-header">
+                    <h1>Histórico de Acesso</h1>
+                    <p>Dispositivos conectados recentemente à sua conta.</p>
+                </div>
+                <div class="config-card">
+                    <div class="log-item">
+                        <div>
+                            <div class="log-meta">Chrome no Windows (Este dispositivo)</div>
+                            <div class="log-date">IP: 177.34.120.45 — Duque de Caxias, Brasil</div>
+                        </div>
+                        <span style="color: #2E7D32; font-weight: bold; font-size: 1.1rem;">Ativo Agora</span>
+                    </div>
+                    <div class="log-item">
+                        <div>
+                            <div class="log-meta">Safari Mobile no iPhone</div>
+                            <div class="log-date">IP: 189.12.87.112 — Rio de Janeiro, Brasil</div>
+                        </div>
+                        <div class="log-date">Há 2 dias</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Botão Salvar Global -->
+            <div style="text-align: right; margin-top: 2rem;">
+                <button type="button" class="btn-salvar" id="btnSalvarConfig">Salvar Alterações</button>
+            </div>
+        </main>
+    </div>
+
+    <footer>© 2026 Pede Ajuda - Todos os direitos reservados.</footer>
+
+<script>
+    // CONTROLE DE SEGURANÇA RIGOROSO
+    const usuarioLogado = localStorage.getItem('usuarioLogado'); 
+    const usuarioId = localStorage.getItem('usuarioId') || '1'; 
+    
+    if (!usuarioLogado) {
+        document.getElementById('securityModal').classList.add('active');
+    }
+
+    function irParaLogin() {
+        window.location.href = "login.html";
+    }
+
+    function showToast(message, icon = "✨") {
+        const container = document.getElementById('toastContainer');
+        const toast = document.createElement('div');
+        toast.className = 'toast-card';
+        toast.innerHTML = `<span>${icon}</span> <span>${message}</span>`;
+        container.appendChild(toast);
+        setTimeout(() => toast.classList.add('show'), 50);
+        setTimeout(() => {
+            toast.classList.remove('show');
+            setTimeout(() => toast.remove(), 400);
+        }, 3500);
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        if (!usuarioLogado) return;
+
+        // Elementos do Menu e Perfil
+        const userBtn = document.getElementById('userBtnMenu');
+        const dropdownContent = document.getElementById('userDropdownContent');
+        const linkSair = document.getElementById('linkSair');
+
+        const inputNomeUser = document.getElementById('inputNomeUser');
+        const inputEmail = document.getElementById('inputEmail');
+        const inputCidade = document.getElementById('inputCidade');
+        const inputTelefone = document.getElementById('inputTelefone');
+
+        // 🛠️ CORREÇÃO JAVASCRIPT: Injeta a inicial diretamente no botão centralizado
+        const inicial = usuarioLogado.trim().charAt(0).toUpperCase();
+        userBtn.innerHTML = `<span class="user-initials">${inicial}</span>`;
+        inputNomeUser.value = usuarioLogado;
+
+        // BUSCA AUTOMÁTICA
+        fetch(`/api/perfil/${usuarioId}`)
+            .then(response => {
+                if (!response.ok) throw new Error('Erro ao buscar dados do perfil');
+                return response.json();
+            })
+            .then(dadosDoBanco => {
+                inputEmail.value = dadosDoBanco.email || '';
+                inputCidade.value = dadosDoBanco.cidade || '';
+                inputTelefone.value = dadosDoBanco.telefone || '';
+            })
+            .catch(error => {
+                console.error("Erro ao carregar dados iniciais:", error);
+                showToast("Não foi possível carregar os dados salvos no banco.", "❌");
+            });
+
+        // Máscara de Telefone
+        inputTelefone.addEventListener('input', function(e){
+            let x = e.target.value.replace(/\D/g, '').match(/(\d{0,2})(\d{0,5})(\d{0,4})/);
+            e.target.value = !x[2] ? x[1] : '(' + x[1] + ') ' + x[2] + (x[3] ? '-' + x[3] : '');
+        });
+
+        // Dropdown Funcional do Header
+        if (userBtn && dropdownContent) {
+            userBtn.addEventListener('click', function(e) { e.stopPropagation(); dropdownContent.classList.toggle('active'); });
+            document.addEventListener('click', function(e) {
+                if (!userBtn.contains(e.target) && !dropdownContent.contains(e.target)) dropdownContent.classList.remove('active');
+            });
+        }
+
+        if (linkSair) {
+            linkSair.addEventListener('click', function(e) {
+                e.preventDefault();
+                localStorage.clear();
+                window.location.href = "login.html";
+            });
+        }
+
+        // SALVAMENTO REAL NO BANCO
+        const btnSalvarConfig = document.getElementById('btnSalvarConfig');
+        btnSalvarConfig.addEventListener('click', function() {
+            if(!inputEmail.value || !inputEmail.value.includes('@')) {
+                showToast("Por favor, digite um e-mail válido.", "❌");
+                return;
+            }
+            if(!inputCidade.value.trim()) {
+                showToast("O campo Cidade não pode ficar vazio.", "❌");
+                return;
+            }
+            if(inputTelefone.value.length < 14) {
+                showToast("Insira um número de telefone válido.", "❌");
+                return;
+            }
+
+            const dadosAtualizados = {
+                email: inputEmail.value.trim(),
+                cidade: inputCidade.value.trim(),
+                telefone: inputTelefone.value.trim()
+            };
+
+            fetch(`/api/perfil/${usuarioId}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(dadosAtualizados)
+            })
+            .then(response => response.json())
+            .then(resultado => {
+                if (resultado.erro) {
+                    showToast(resultado.erro, "❌");
+                } else {
+                    showToast("Banco de dados updated!", "✔️");
+                }
+            })
+            .catch(error => {
+                console.error("Erro na sincronização:", error);
+                showToast("Erro de comunicação com o servidor.", "❌");
+            });
+        });
+    });
+
+    // Alternância de Abas
+    function switchTab(tabName, evt) {
+        document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+        document.querySelectorAll('.sidebar-btn').forEach(btn => btn.classList.remove('active'));
+        document.getElementById('aba-' + tabName).classList.add('active');
+        if(evt && evt.currentTarget) {
+            evt.currentTarget.classList.add('active');
+        }
+    }
+</script>
+</body>
+</html>

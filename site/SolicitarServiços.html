@@ -1,330 +1,624 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-   <style>
-        :root {
-            --accent: #BFA181;
-            --white: #ffffff;
-            --muted: #f6f2ef;
-            --muted-2: #efe9e2
-        }
-
+    <title>Solicitar Serviço - Pede Ajuda</title>
+    <style>
         * {
-            box-sizing: border-box
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
-        html, body {
-            height: 100%
+        html {
+            scroll-behavior: smooth;
+            font-size: 65%; 
+            background-color: #ffe0ce94;
         }
 
         body {
-            font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-            background: linear-gradient(180deg, #fbf9f7 0%, var(--muted) 100%);
-            color: #222;
-            margin: 0;
-            padding: 40px 20px;
+            background-color: #ffe0ce94; 
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            color: #231C19; 
+            -webkit-font-smoothing: antialiased;
             display: flex;
-            flex-direction: column; /* Garante que os links inferiores fiquem no lugar certo */
-            justify-content: start;
-            align-items: center
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* HEADER ULTRA CLEAN — ESCALA 100% FIEL AO index.html.HTML */
+        header.header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0px 68px; 
+            background-color: rgba(252, 249, 245, 0.85); 
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 2px solid rgba(255, 122, 26, 0.15); 
+            box-shadow: 0 4px 20px rgba(35, 28, 25, 0.03);
+            transition: all 0.3s ease;
+        }
+
+        .header-logo-container {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo {
+            width: 136px;
+            height: auto;
+            display: block;    
+        }
+
+        .logo:hover {
+            transform: scale(1.02);
+        }
+
+        /* LINKS DO MENU INTEGRADOS */
+        .nav-menu {
+            display: flex;
+            gap: 1.2rem; 
+            align-items: center;
+        }
+
+        .nav-menu a {
+            text-decoration: none;
+            color: #5C4E48;
+            font-weight: 600;
+            font-size: 1.25rem;
+            letter-spacing: -0.1px;
+            padding: 0.8rem 1.6rem;
+            border-radius: 99px;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        
+        /* Destaque estrito da página atual ativa */
+        .nav-menu a[href="SolicitarServiços.html"] {
+            background: linear-gradient(135deg, #FF8F3D 0%, #FF6B00 100%);
+            transform: translateY(-1px);
+            color: #ffffff;
+            box-shadow: 0 6px 20px rgba(230, 92, 0, 0.3);
+        }
+        
+        .nav-menu a[href="index.html#serv"]:hover,
+        .nav-menu a[href="ProfissionaisDisponiveis.html"]:hover {
+            background: linear-gradient(135deg, #FF8F3D 0%, #FF6B00 100%);
+            transform: translateY(-1px);
+            color: #ffffff;
+            box-shadow: 0 6px 20px rgba(230, 92, 0, 0.3);
+        }
+
+        /* SYSTEM DROPDOWN DO USUÁRIO */
+        .user-dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .user-btn {
+            background: #F7EFE5;
+            border: 1px solid rgba(230, 92, 0, 0.2);
+            border-radius: 50%;
+            width: 38px;
+            height: 38px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0;
+            color: #5C4E48;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.04);
+        }
+        
+        .user-btn:hover {
+            border-color: #E65C00;
+            background: #fff;
+        }
+
+        .user-icon {
+            width: 18px;
+            height: 18px;
+        }
+
+        .user-initials {
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: #FFFFFF;
+            background: linear-gradient(135deg, #FF7A1A 0%, #E65C00 100%);
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            right: 0;
+            background-color: #FFFFFF;
+            min-width: 160px;
+            box-shadow: 0 10px 30px rgba(35, 28, 25, 0.12);
+            border: 1px solid rgba(230, 92, 0, 0.1);
+            border-radius: 16px;
+            padding: 0.8rem 0;
+            z-index: 1100;
+            margin-top: 8px;
+        }
+
+        .dropdown-content.active {
+            display: block;
+        }
+
+        .dropdown-content a {
+            color: #231C19 !important;
+            padding: 1rem 1.6rem !important;
+            text-decoration: none;
+            display: block;
+            font-size: 1.2rem !important;
+            font-weight: 500 !important;
+            border-radius: 0 !important;
+            background: transparent !important;
+            box-shadow: none !important;
+            transform: none !important;
+            text-align: left;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #FFF0E6 !important;
+            color: #E65C00 !important;
+        }
+
+        #linkSair {
+            color: #C62828 !important;
+            border-top: 1px solid #EFE4DA;
+            margin-top: 4px;
+        }
+        
+        #linkSair:hover {
+            background-color: #FFF5F5 !important;
+        }
+
+        /* RESPONSIVIDADE DO HEADER */
+        @media (max-width: 992px) {
+            header.header { padding: 1.3rem 3.3rem; }
+        }
+
+        @media (max-width: 768px) {
+            header.header {
+                padding: 1.1rem 2rem;
+                flex-direction: column;
+                gap: 1rem;
+            }
+            .nav-menu {
+                width: 100%;
+                justify-content: center;
+                flex-wrap: wrap;
+                gap: 0.5rem;
+            }
+            .nav-menu a {
+                padding: 0.6rem 1.1rem;
+                font-size: 1.1rem;
+            }
+            .dropdown-content {
+                right: 50%;
+                transform: translateX(50%);
+            }
+        }
+
+        /* ========================================================== */
+        /* AJUSTE COMPLETO E ARMONIOSO DO MAIN CONTAINER & CARD       */
+        /* ========================================================== */
+        .main-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            padding: 6rem 2rem;     
+            width: 100%;
+            flex-grow: 1;
         }
 
         .card {
-            background: var(--white);
+            background-color: #ffffff;
             width: 100%;
-            max-width: 1020px;
-            border-radius: 14px;
-            box-shadow: 0 10px 40px rgba(15, 20, 25, 0.08);
-            padding: 28px;
-            display: grid;
-            grid-template-columns: 1fr 360px;
-            gap: 28px;
-            align-items: start
+            max-width: 68rem;       
+            border-radius: 24px;    
+            box-shadow: 0 10px 40px rgba(35, 28, 25, 0.04);
+            border: 1px solid rgba(230, 92, 0, 0.06);
+            padding: 4.5rem;          
         }
 
         .card-header {
             display: flex;
             flex-direction: column;
-            gap: 6px;
-            margin-bottom: 20px /* Aumentado para dar mais respiro */
+            gap: 1rem;               
+            margin-bottom: 4rem;    
+            text-align: center; 
         }
 
         h1 {
-            color: var(--accent);
+            color: #231C19;
             margin: 0;
-            font-size: 1.6rem
+            font-size: 3.2rem;     
+            font-weight: 800;
+            letter-spacing: -1px;
+        }
+        h1 span {
+            background: linear-gradient(135deg, #FF7A1A 0%, #E65C00 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
         .subtitle {
-            color: #6b6b6b;
-            font-size: 0.95rem
+            color: #5C4E48;
+            font-size: 1.4rem;     
+            font-weight: 400;
+            line-height: 1.5;
         }
 
-        /* CORREÇÃO AQUI: O grid agora se aplica ao fieldset para alinhar os inputs corretamente */
         fieldset {
             border: 0;
             padding: 0;
             margin: 0;
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 16px
+            gap: 2.2rem;              
         }
 
-        .full {
-            grid-column: 1 / -1
+        .full { grid-column: 1 / -1; }
+
+        .field-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
         }
 
         label {
             display: block;
-            font-size: 0.85rem;
-            margin-bottom: 6px;
-            color: #444
+            font-size: 1.25rem;     
+            color: #231C19;
+            font-weight: 600;
+            letter-spacing: -0.1px;
         }
 
         input[type=text], input[type=email], input[type=tel], input[type=date], select, textarea {
             width: 100%;
-            padding: 12px 14px;
-            border-radius: 10px;
-            border: 1px solid #efe6dd;
-            background: #fff;
-            font-size: 0.95rem;
+            padding: 1.2rem 1.6rem;     
+            border-radius: 12px;    
+            border: 1px solid #D6C7BC;
+            background: #ffffff;
+            font-size: 1.35rem;     
+            color: #231C19;
             outline: none;
-            transition: all 0.2s ease /* Suaviza o foco */
+            font-family: inherit;
+            transition: all 0.2s ease;
         }
+        
+        input[type=date] { color: #5C4E48; }
 
         input:focus, textarea:focus, select:focus {
-            box-shadow: 0 0 0 4px rgba(191, 161, 129, 0.08);
-            border-color: var(--accent)
+            box-shadow: 0 0 0 3px rgba(255, 122, 26, 0.15);
+            border-color: #E65C00;
+            background: #ffffff;
         }
 
         textarea {
             resize: vertical;
-            min-height: 120px
-        }
-
-        .radios {
-            display: flex;
-            flex-direction: column; /* Alinha o título acima das opções */
-            gap: 8px;
-            justify-content: center
-        }
-
-        .radio-group {
-            display: flex;
-            gap: 12px;
-            flex-wrap: wrap /* Não quebra em telas pequenas */
-        }
-
-        .radios label {
-            display: inline-flex;
-            gap: 8px;
-            align-items: center;
-            background: #fff;
-            padding: 8px 12px;
-            border-radius: 10px;
-            border: 1px solid #efe6dd;
-            cursor: pointer
+            min-height: 12rem;      
         }
 
         .submit-btn {
             grid-column: 1 / -1;
-            background: var(--accent);
-            color: var(--white);
+            background: linear-gradient(135deg, #FF7A1A 0%, #E65C00 100%);
+            color: #ffffff;
             border: 0;
-            padding: 14px 18px;
-            border-radius: 12px;
+            padding: 1.4rem 2.8rem;     
+            border-radius: 99px; 
             font-weight: 700;
             cursor: pointer;
-            box-shadow: 0 10px 30px rgba(191, 161, 129, 0.18);
+            box-shadow: 0 6px 20px rgba(230, 92, 0, 0.25);
             width: 100%;
-            font-size: 1rem;
-            margin-top: 10px
+            font-size: 1.25rem;     
+            margin-top: 1.5rem;       
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
         }
-
         .submit-btn:hover {
-            filter: brightness(.96)
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(230, 92, 0, 0.4);
         }
+        .submit-btn:active { transform: translateY(0); }
 
-        .form-right {
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-            align-items: center;
-            justify-content: flex-start;
-            position: sticky;
-            top: 20px
-        }
-
-        .preview-img {
-            width: 100%;
-            max-height: 400px;
-            height: auto;
-            object-fit: cover;
-            border-radius: 12px;
-            box-shadow: 0 8px 30px rgba(0, 0, 0, .06);
-            border: 1px solid #f0ebe6
-        }
-
+        /* LINKS INFERIORES ADAPTADOS */
         .page-links {
             display: flex;
-            gap: 12px;
+            gap: 1.5rem;              
             justify-content: center;
-            margin-top: 24px;
+            margin-top: 3.5rem;       
             width: 100%;
-            max-width: 1020px
+            max-width: 68rem;       
         }
 
         .page-links a {
-            padding: 10px 16px;
-            border-radius: 8px;
+            padding: 1.2rem 2.4rem;     
+            border-radius: 99px;
             text-decoration: none;
-            border: 1px solid transparent;
-            color: #666;
-            background: transparent;
+            border: 1px solid rgba(255, 122, 26, 0.2);
+            color: #5C4E48;
+            background: rgba(252, 249, 245, 0.85);
             font-weight: 600;
+            font-size: 1.3rem;      
             text-align: center;
-            flex: 1; /* Faz os botões dividirem o espaço igualmente no celular */
-            max-width: 200px
+            flex: 1;
+            box-shadow: 0 4px 15px rgba(35, 28, 25, 0.02);
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
         }
-
         .page-links a.primary {
-            background: var(--accent);
-            color: var(--white);
-            border-color: var(--accent)
+            background: #ffffff;
+            color: #E65C00;
+            border: 1px solid #FF7A1A;
         }
-
         .page-links a:hover {
-            opacity: .95
+            transform: translateY(-2px);
+            background: #ffffff;
+            border-color: rgba(35, 28, 25, 0.3);
+            box-shadow: 0 6px 20px rgba(35, 28, 25, 0.06);
+        }
+        .page-links a.primary:hover {
+            background: rgba(255, 122, 26, 0.05);
+            box-shadow: 0 6px 20px rgba(230, 92, 0, 0.08);
         }
 
-        /* --- CONFIGURAÇÕES PARA CELULAR E TABLET --- */
-        @media (max-width: 960px) {
-            .card {
-                grid-template-columns: 1fr 300px;
-                gap: 20px;
-                padding: 20px
-            }
+        /* RESPONSIVIDADE DO FORMULÁRIO */
+        @media (max-width: 600px) {
+            .card { padding: 2.5rem 2rem; }
+            fieldset { grid-template-columns: 1fr; gap: 1.8rem; }
+            .page-links { flex-direction: column; gap: 1rem; }
+            h1 { font-size: 2.6rem; }
         }
 
-        @media (max-width: 768px) {
-            body {
-                padding: 16px 12px
-            }
-            .card {
-                grid-template-columns: 1fr; /* Transforma o layout em uma coluna única */
-                gap: 24px
-            }
-            fieldset {
-                grid-template-columns: 1fr /* No celular, cada input fica em sua própria linha */
-            }
-            .form-right {
-                order: -1; /* Move a foto/preview para o TOPO no celular, melhorando o visual */
-                position: static
-            }
-            .preview-img {
-                max-height: 200px; /* Reduz o tamanho da foto no celular para não ocupar a tela toda */
-                object-fit: contain
-            }
-            .page-links {
-                flex-direction: column; /* Botões inferiores ficam um abaixo do outro no celular */
-                align-items: center;
-                gap: 8px
-            }
-            .page-links a {
-                max-width: 100%;
-                width: 100%
-            }
+        /* FOOTER */
+        footer {
+            background-color: #231C19;
+            color: #D6C7BC;
+            text-align: center;
+            padding: 3.3rem 1.6rem;
+            font-size: 1.1rem;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            border-top: 3px solid #FF7A1A;
+            margin-top: auto;
         }
     </style>
 </head>
 
 <body>
 
-    <div class="card">
-        <div>
-            <div class="card-header">
-                <h1>Cadastro de Solicitantes</h1>
-                <div class="subtitle">Preencha os dados abaixo para solicitar um profissional qualificado.</div>
+    <header class="header">
+        <div class="header-logo-container">
+            <a href="index.html">
+                <img src="logosite.PNG" alt="Logo Pede Ajuda" class="logo">
+            </a>
+        </div>
+        <nav class="nav-menu">
+            <a href="index.html#serv">Conheça os Serviços</a>
+            <a href="SolicitarServiços.html">Solicitar Serviços</a>
+            <a href="ProfissionaisDisponiveis.html">Profissionais</a>
+            
+            <div class="user-dropdown">
+                <button class="user-btn" id="userBtnMenu" aria-label="Menu da conta" type="button">
+                    <div id="userBtnContent" style="display: flex; align-items: center; justify-content: center; width: 100%; height: 100%;">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="user-icon">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="12" cy="7" r="4"></circle>
+                        </svg>
+                    </div>
+                </button>
+                <div class="dropdown-content" id="userDropdownContent">
+                    <a href="login.html" id="linkEntrar">Entrar</a>
+                    <a href="minhaconta.html" id="linkMinhaConta" style="display: none;">Minha Conta</a>
+                    <a href="configuracoes.html">Configurações</a>
+                    <a href="#" id="linkSair" style="display: none;">Sair</a>
+                </div>
             </div>
-            <form>
-            <fieldset>
-                <div>
-                    <label for="nome">Nome completo</label>
-                    <input id="nome" name="nome" type="text" placeholder="Nome completo" required>
-                </div>
-                <div>
-                    <label for="cpf">CPF</label>
-                    <input id="cpf" name="cpf" type="text" maxlength="11" placeholder="CPF" required>
-                </div>
-                <div>
-                    <label for="nascimento">Sua data de Nascimento</label>
-                    <input id="nascimento" name="nascimento" type="date" required>
-                </div>
-                <div class="radios">
-                    <label><input type="radio" name="sexo" value="Masculino" required> Masculino</label>
-                    <label><input type="radio" name="sexo" value="Feminino"> Feminino</label>
-                </div>
-                <div>
-                    <label for="telefone">Telefone</label>
-                    <input id="telefone" name="telefone" type="tel" placeholder="Telefone" required>
-                </div>
-                <div>
-                    <label for="email">E-mail</label>
-                    <input id="email" name="email" type="email" placeholder="E-mail" required>
-                </div>
-                <div>
-                    <label for="cidade">Cidade / Bairro</label>
-                    <input id="cidade" name="cidade" type="text" placeholder="Cidade / Bairro" required>
-                </div>
-                <div>
-                    <label for="cep">CEP</label>
-                    <input id="cep" name="cep" type="text" placeholder="CEP" required>
-                </div>
-                <div class="full">
-                    <label for="tecnico">Técnico Necessário</label>
-                    <select id="tecnico" name="tecnico" required>
-                        <option disabled value="">Selecione um técnico</option>
-                        <option>Técnico em Informática</option>
-                        <option>Eletricista</option>
-                        <option>Refrigeração</option>
-                        <option>Pintura</option>
-                        <option>Encanador</option>
-                        <option>Técnico em Internet/Wi-fi</option>
-                        <option>Montador de Móveis</option>
-                        <option>Chaveiro</option>
-                        <option>Serviços de Limpeza</option>
-                    </select>
-                </div>
-                <div class="full">
-                    <label for="sugestao">Informe o problema</label>
-                    <textarea id="sugestao" name="sugestao" rows="6" placeholder="Descreva o problema" required></textarea>
-                </div>
-                
-                <div class="pagamento">
-                    <label for="pagamento">Forma de Pagamento</label>
-                    <label><input type="radio" name="pagamento" value="PIX" required> PIX</label>
-                    <label><input type="radio" name="pagamento" value="credito"> Cartão</label>
-                    <label><input type="radio" name="pagamento" value="debito" required> Dinheiro</label>
-                </div>
-                <button class="submit-btn full" type="submit">Cadastrar Profissional</button>
-            </fieldset>
+        </nav>
+    </header>
+
+    <div class="main-container">
+        <div class="card">
+            <div class="card-header">
+                <h1>Solicitar <span>Serviço</span></h1>
+                <div class="subtitle">Preencha os dados abaixo para pedir um atendimento profissional rápido e seguro.</div>
+            </div>
+
+            <form id="formSolicitarServico">
+                <fieldset>
+                    <div class="field-group">
+                        <label for="nome">Seu Nome completo</label>
+                        <input id="nome" name="nome" type="text" placeholder="Ex: Maria Souza" required>
+                    </div>
+                    <div class="field-group">
+                        <label for="cpf">Seu CPF</label>
+                        <input id="cpf" name="cpf" type="text" maxlength="14" placeholder="000.000.000-00" required>
+                    </div>
+                    <div class="field-group">
+                        <label for="telefone">Telefone de contato</label>
+                        <input id="telefone" name="telefone" type="tel" maxlength="15" placeholder="(00) 00000-0000" required>
+                    </div>
+                    <div class="field-group">
+                        <label for="email">E-mail</label>
+                        <input id="email" name="email" type="email" placeholder="seuemail@email.com" required>
+                    </div>
+                    <div class="field-group">
+                        <label for="cidade">Cidade / Bairro onde será o serviço</label>
+                        <input id="cidade" name="cidade" type="text" placeholder="Ex: Centro" required>
+                    </div>
+                    <div class="field-group">
+                        <label for="cep">CEP do local</label>
+                        <input id="cep" name="cep" type="text" maxlength="9" placeholder="00000-000" required>
+                    </div>
+                    <div class="field-group">
+                        <label for="area">Qual profissional você precisa?</label>
+                        <select id="area" name="area" required>
+                            <option disabled selected value="">Selecione o serviço</option>
+                            <option value="Técnico em Informática">Técnico em Informática</option>
+                            <option value="Eletricista">Eletricista</option>
+                            <option value="Refrigeração">Refrigeração</option>
+                            <option value="Pintura">Pintura</option>
+                            <option value="Encanador">Encanador</option>
+                            <option value="Técnico em Internet/Wi-fi">Técnico em Internet/Wi-fi</option>
+                            <option value="Montador de Móveis">Montador de Móveis</option>
+                            <option value="Chaveiro">Chaveiro</option>
+                            <option value="Serviços de Limpeza">Serviços de Limpeza</option>
+                        </select>
+                    </div>
+                    <div class="field-group">
+                        <label for="data_atendimento">Data pretendida para o serviço</label>
+                        <input id="data_atendimento" name="data_atendimento" type="date" required>
+                    </div>
+                    <div class="field-group full">
+                        <label for="descricao">O que precisa ser feito? (Descreva o problema)</label>
+                        <textarea id="descricao" name="descricao" placeholder="Ex: Preciso instalar um ar condicionado split de 12000 BTUs na sala..." required></textarea>
+                    </div>
+
+                    <button class="submit-btn full" type="submit">Enviar Solicitação de Serviço</button>
+                </fieldset>
             </form>
         </div>
 
-        <aside class="form-right">
-            <img class="preview-img" src="Captura de tela 2026-05-16 130137.png" alt="preview">
-            <img class="preview-img" src="VEIO.PNG" alt="preview 2">
-        </aside>
+        <div class="page-links">
+            <a href="index.html">Voltar à tela inicial</a>
+            <a class="primary" href="Profissional.html">Quero me cadastrar como Profissional</a>
+        </div>
     </div>
 
-    <div class="page-links">
-        <a class="" href="site.html">Voltar à tela inicial</a>
-        <a class="primary" href="Profissional.html">Quero me tornar da Equipe</a>
-    </div>
+<script>
+    /* ==========================================================
+       1. MÁSCARAS DOS CAMPOS DO FORMULÁRIO
+       ========================================================== */
+    const aplicarMascara = (input, funcaoMascara) => {
+        if(!input) return;
+        input.addEventListener('input', (e) => {
+            e.target.value = funcaoMascara(e.target.value);
+        });
+    };
+
+    const mCPF = (value) => {
+        return value.replace(/\D/g, '').replace(/(\d{3})(\d)/, '$1.$2').replace(/(\d{3})(\d)/, '$1.$2').replace(/(\d{3})(\d{1,2})$/, '$1-$2');
+    };
+
+    const mTel = (value) => {
+        return value.replace(/\D/g, '').replace(/^(\d{2})(\d)/g, '($1) $2').replace(/(\d{5})(\d)/, '$1-$2').substring(0, 15);
+    };
+
+    const mCEP = (value) => {
+        return value.replace(/\D/g, '').replace(/^(\d{5})(\d)/, '$1-$2');
+    };
+
+    aplicarMascara(document.getElementById('cpf'), mCPF);
+    aplicarMascara(document.getElementById('telefone'), mTel);
+    aplicarMascara(document.getElementById('cep'), mCEP);
+
+
+    /* ==========================================================
+       2. CONTROLE DO LOGON LOCAL STORAGE INTEGRADO
+       ========================================================== */
+    document.addEventListener('DOMContentLoaded', function() {
+        const userBtn = document.getElementById('userBtnMenu');
+        const userBtnContent = document.getElementById('userBtnContent');
+        const dropdownContent = document.getElementById('userDropdownContent');
+        
+        const linkEntrar = document.getElementById('linkEntrar');
+        const linkMinhaConta = document.getElementById('linkMinhaConta');
+        const linkSair = document.getElementById('linkSair');
+
+        const usuario = localStorage.getItem('usuarioLogado');
+
+        if (usuario && userBtnContent) {
+            const inicial = usuario.trim().charAt(0).toUpperCase();
+            userBtnContent.innerHTML = `<span class="user-initials">${inicial}</span>`;
+            
+            if(linkEntrar) linkEntrar.style.display = 'none';
+            if(linkMinhaConta) linkMinhaConta.style.display = 'block';
+            if(linkSair) linkSair.style.display = 'block';
+        }
+
+        if (userBtn && dropdownContent) {
+            userBtn.addEventListener('click', function(event) {
+                event.stopPropagation();
+                dropdownContent.classList.toggle('active');
+            });
+
+            document.addEventListener('click', function(event) {
+                if (!userBtn.contains(event.target) && !dropdownContent.contains(event.target)) {
+                    dropdownContent.classList.remove('active');
+                }
+            });
+        }
+
+        if (linkSair) {
+            linkSair.addEventListener('click', function(event) {
+                event.preventDefault();
+                localStorage.removeItem('usuarioLogado');
+                window.location.href = 'index.html';
+            });
+        }
+    });
+
+    /* ==========================================================
+       3. ENVIO ASSÍNCRONO DO FORMULÁRIO DE SOLICITAÇÃO
+       ========================================================== */
+    document.getElementById('formSolicitarServico').addEventListener('submit', async function(event) {
+        event.preventDefault();
+        const formData = new FormData(this);
+        const dados = Object.fromEntries(formData.entries());
+
+        try {
+            const response = await fetch('/api/solicitar-servico', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(dados)
+            });
+
+            let resultado = {};
+            try { resultado = await response.json(); } catch(e) {}
+
+            if (response.ok) {
+                const aviso = document.createElement('div');
+                aviso.style.position = 'fixed';
+                aviso.style.top = '2rem';
+                aviso.style.left = '50%';
+                aviso.style.transform = 'translateX(-50%)';
+                aviso.style.backgroundColor = '#2E7D32';
+                aviso.style.color = '#ffffff';
+                aviso.style.padding = '1.4rem 2.8rem';
+                aviso.style.borderRadius = '99px';
+                aviso.style.fontWeight = '600';
+                aviso.style.fontSize = '1.4rem';
+                aviso.style.boxShadow = '0 10px 25px rgba(35, 28, 25, 0.15)';
+                aviso.style.zIndex = '20000';
+                aviso.textContent = '🎉 Solicitação de serviço enviada com sucesso!';
+                document.body.appendChild(aviso);
+
+                this.reset();
+                setTimeout(() => { window.location.href = 'index.html'; }, 2000);
+            } else {
+                alert('⚠️ Erro: ' + (resultado.erro || 'Falha ao salvar a solicitação.'));
+            }
+        } catch (error) {
+            console.error('Erro:', error);
+            alert('❌ Erro de conexão com o servidor.');
+        }
+    });
+</script>            
 </body>
-
 </html>

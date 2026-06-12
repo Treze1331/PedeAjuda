@@ -1,0 +1,1315 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Pede Ajuda - Encontre profissionais de manutenção perto de você">
+    <title>Pede Ajuda - Serviços de Manutenção</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            font-size: 65%;
+            background-color: #ffe0ce94;
+        }
+
+        body {
+            background-color: #ffe0ce94;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            color: #231C19;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* ── HEADER ── */
+        header.header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0px 68px;
+            background-color: rgba(252, 249, 245, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 2px solid rgba(255, 122, 26, 0.15);
+            box-shadow: 0 4px 20px rgba(35, 28, 25, 0.03);
+            transition: all 0.3s ease;
+        }
+
+        .header-logo-container { display: flex; align-items: center; }
+
+        .logo { width: 136px; height: auto; display: block; }
+        .logo:hover { transform: scale(1.02); }
+
+        .nav-menu { display: flex; gap: 1.2rem; align-items: center; }
+
+        .nav-menu a {
+            text-decoration: none;
+            color: #5C4E48;
+            font-weight: 600;
+            font-size: 1.25rem;
+            letter-spacing: -0.1px;
+            padding: 0.8rem 1.6rem;
+            border-radius: 99px;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .nav-menu a[href="#serv"] {
+            background: linear-gradient(135deg, #FF8F3D 0%, #FF6B00 100%);
+            transform: translateY(-1px);
+            color: #ffffff;
+            box-shadow: 0 6px 20px rgba(230, 92, 0, 0.3);
+        }
+        
+        .nav-menu a[href="SolicitarServiços.html"]:hover,
+        .nav-menu a[href="ProfissionaisDisponiveis.html"]:hover {
+            background: linear-gradient(135deg, #FF8F3D 0%, #FF6B00 100%);
+            transform: translateY(-1px);
+            color: #ffffff;
+            box-shadow: 0 6px 20px rgba(230, 92, 0, 0.3);
+        }
+
+        /* ── USER DROPDOWN ── */
+        .user-dropdown { position: relative; display: inline-block; }
+
+        .user-btn {
+            background: #F7EFE5;
+            border: 1px solid rgba(230, 92, 0, 0.2);
+            border-radius: 50%;
+            width: 38px; height: 38px;
+            cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            padding: 0;
+            color: #5C4E48;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.04);
+        }
+        .user-btn:hover { border-color: #E65C00; background: #fff; }
+        .user-icon { width: 18px; height: 18px; }
+
+        .user-initials {
+            font-size: 1.4rem; font-weight: 800; color: #FFFFFF;
+            background: linear-gradient(135deg, #FF7A1A 0%, #E65C00 100%);
+            width: 100%; height: 100%;
+            display: flex; align-items: center; justify-content: center;
+            border-radius: 50%;
+        }
+
+        .dropdown-content {
+            display: none; position: absolute; right: 0;
+            background-color: #FFFFFF; min-width: 160px;
+            box-shadow: 0 10px 30px rgba(35, 28, 25, 0.12);
+            border: 1px solid rgba(230, 92, 0, 0.1);
+            border-radius: 16px; padding: 0.8rem 0;
+            z-index: 1100; margin-top: 8px;
+        }
+        .dropdown-content.active { display: block; }
+
+        .dropdown-content a {
+            color: #231C19 !important; padding: 1rem 1.6rem !important;
+            text-decoration: none; display: block;
+            font-size: 1.2rem !important; font-weight: 500 !important;
+            border-radius: 0 !important; background: transparent !important;
+            box-shadow: none !important; transform: none !important; text-align: left;
+        }
+        .dropdown-content a:hover { background-color: #FFF0E6 !important; color: #E65C00 !important; }
+
+        #linkSair { color: #C62828 !important; border-top: 1px solid #EFE4DA; margin-top: 4px; }
+        #linkSair:hover { background-color: #FFF5F5 !important; }
+
+        @media (max-width: 992px) { header.header { padding: 1.3rem 3.3rem; } }
+        @media (max-width: 768px) {
+            header.header { padding: 1.1rem 2rem; flex-direction: column; gap: 1rem; }
+            .nav-menu { width: 100%; justify-content: center; flex-wrap: wrap; gap: 0.5rem; }
+            .nav-menu a { padding: 0.6rem 1.1rem; font-size: 1.1rem; }
+            .dropdown-content { right: 50%; transform: translateX(50%); }
+        }
+
+        /* ── HERO SECTION ── */
+        .hero-section {
+            text-align: center;
+            padding: 10rem 1.6rem 7.5rem 1.6rem;
+            max-width: 83.3rem;
+            margin: 0 auto;
+        }
+
+        .hero-section h1 {
+            font-size: 4.3rem; color: #231C19;
+            margin-bottom: 2rem; font-weight: 800;
+            letter-spacing: -1.8px; line-height: 1.1;
+        }
+
+        .hero-section h1 span {
+            background: linear-gradient(135deg, #FF7A1A 0%, #E65C00 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: inline-block;
+        }
+
+        .hero-section h2 {
+            font-size: 1.6rem; color: #5C4E48;
+            margin-bottom: 3.7rem; font-weight: 400;
+            max-width: 56.6rem; margin-left: auto; margin-right: auto;
+            line-height: 1.6; letter-spacing: -0.2px;
+        }
+
+        /* ── BOTÕES ── */
+        .btn {
+            padding: 1.1rem 3.1rem; font-size: 1.15rem; font-weight: 700;
+            border: none; border-radius: 99px; cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            letter-spacing: 0.5px; text-transform: uppercase; display: inline-block;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #FF7A1A 0%, #E65C00 100%);
+            color: #FFFFFF; box-shadow: 0 6px 20px rgba(255, 122, 26, 0.3);
+        }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(255, 122, 26, 0.45); }
+
+        .btn-secondary {
+            background-color: #231C19; color: #F3EAE0;
+            box-shadow: 0 4px 15px rgba(35, 28, 25, 0.15);
+        }
+        .btn-secondary:hover {
+            background-color: #3D312C; transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(35, 28, 25, 0.25);
+        }
+
+        /* ══════════════════════════════════════════════════════
+           FEATURE108 — SEÇÃO DE SERVIÇOS COM TABS
+           Port fiel do componente React/shadcn para HTML puro
+           ══════════════════════════════════════════════════════ */
+        .feature108-wrapper {
+            background-color: #F7EFE5;
+            border-top: 1px solid rgba(255, 107, 0, 0.1);
+            border-bottom: 1px solid rgba(255, 107, 0, 0.1);
+            padding: 10rem 1.6rem;
+        }
+
+        .feature108-container {
+            max-width: 128rem;
+            margin: 0 auto;
+        }
+
+        /* Cabeçalho central */
+        .feature108-header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.6rem;
+            text-align: center;
+            margin-bottom: 5rem;
+        }
+
+        /* Badge — porta do shadcn Badge variant="outline" */
+        .f108-badge {
+            display: inline-flex;
+            align-items: center;
+            border: 1px solid rgba(230, 92, 0, 0.35);
+            border-radius: 99px;
+            padding: 0.4rem 1.4rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #E65C00;
+            background: transparent;
+            letter-spacing: 0.3px;
+        }
+
+        .feature108-header h1 {
+            max-width: 60rem;
+            font-size: 3.2rem;
+            font-weight: 700;
+            color: #231C19;
+            letter-spacing: -0.8px;
+            line-height: 1.2;
+        }
+
+        .feature108-header p {
+            font-size: 1.4rem;
+            color: #7A6A62;
+        }
+
+        /* ── TABS LIST ── */
+        .f108-tabs-list {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 1.2rem;
+            margin-bottom: 3.2rem;
+        }
+
+        @media (min-width: 576px) {
+            .f108-tabs-list { flex-direction: row; gap: 1rem; }
+        }
+
+        @media (min-width: 768px) {
+            .f108-tabs-list { gap: 2.5rem; }
+        }
+
+        .f108-tab-trigger {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.8rem;
+            padding: 1.1rem 2rem;
+            border-radius: 14px;
+            border: none;
+            background: transparent;
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #7A6A62;
+            cursor: pointer;
+            transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+            font-family: inherit;
+        }
+
+        .f108-tab-trigger svg {
+            width: 1.6rem;
+            height: 1.6rem;
+            flex-shrink: 0;
+        }
+
+        .f108-tab-trigger:hover {
+            color: #231C19;
+            background: rgba(230, 92, 0, 0.06);
+        }
+
+        .f108-tab-trigger.active {
+            background: rgba(230, 92, 0, 0.1);
+            color: #E65C00;
+        }
+
+        /* ── TABS PANEL ── */
+        .f108-tabs-panel {
+            max-width: 128rem;
+            margin: 0 auto;
+            background: rgba(247, 239, 229, 0.7);
+            border-radius: 20px;
+            padding: 3.2rem;
+            border: 1px solid rgba(230, 92, 0, 0.08);
+        }
+
+        @media (min-width: 1024px) {
+            .f108-tabs-panel { padding: 6.4rem; }
+        }
+
+        /* ── TAB CONTENT ── */
+        .f108-tab-content {
+            display: none;
+            gap: 8rem;
+            align-items: center;
+        }
+
+        .f108-tab-content.active {
+            display: grid;
+            grid-template-columns: 1fr;
+        }
+
+        @media (min-width: 1024px) {
+            .f108-tab-content.active {
+                grid-template-columns: 1fr 1fr;
+                gap: 4rem;
+            }
+        }
+
+        .f108-content-text {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        /* Badge dentro do conteúdo — variant="outline" com bg */
+        .f108-content-badge {
+            display: inline-flex;
+            align-items: center;
+            border: 1px solid rgba(35, 28, 25, 0.15);
+            border-radius: 99px;
+            padding: 0.4rem 1.4rem;
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: #5C4E48;
+            background: #FFFFFF;
+            width: fit-content;
+        }
+
+        .f108-content-text h3 {
+            font-size: 2.8rem;
+            font-weight: 700;
+            color: #231C19;
+            letter-spacing: -0.8px;
+            line-height: 1.2;
+        }
+
+        @media (min-width: 1024px) {
+            .f108-content-text h3 { font-size: 4rem; }
+        }
+
+        .f108-content-text p {
+            font-size: 1.35rem;
+            color: #7A6A62;
+            line-height: 1.65;
+        }
+
+        @media (min-width: 1024px) {
+            .f108-content-text p { font-size: 1.5rem; }
+        }
+
+        /* Botão do conteúdo — shadcn Button size="lg" */
+        .f108-content-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.8rem;
+            margin-top: 1rem;
+            width: fit-content;
+            padding: 1.2rem 2.8rem;
+            border-radius: 10px;
+            border: none;
+            font-size: 1.3rem;
+            font-weight: 600;
+            cursor: pointer;
+            font-family: inherit;
+            background: linear-gradient(135deg, #FF7A1A 0%, #E65C00 100%);
+            color: #FFFFFF;
+            box-shadow: 0 4px 16px rgba(230, 92, 0, 0.25);
+            transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .f108-content-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(230, 92, 0, 0.38);
+        }
+
+        /* Imagem do conteúdo */
+        .f108-content-img {
+            width: 100%;
+            border-radius: 14px;
+            display: block;
+            object-fit: cover;
+            aspect-ratio: 16/10;
+        }
+
+        /* ── SERVICES GRID ── */
+        .services-wrapper {
+            background-color: #FFFFFF;
+            border-top: 1px solid rgba(255, 107, 0, 0.08);
+            border-bottom: 1px solid rgba(255, 107, 0, 0.08);
+            padding: 6.6rem 1.6rem 8.3rem 1.6rem;
+        }
+
+        .services-section {
+            max-width: 100rem;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 1.15rem;
+            font-weight: 800;
+            margin-bottom: 4.1rem;
+            color: #E65C00;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(26.6rem, 1fr));
+            gap: 2rem;
+        }
+
+        .service-card {
+            background: #F7EFE5;
+            padding: 3.3rem 2.9rem;
+            border-radius: 24px;
+            transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+            border: 1px solid rgba(230, 92, 0, 0.08);
+            box-shadow: 0 4px 20px rgba(35, 28, 25, 0.02);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+            border-color: #FF7A1A;
+            box-shadow: 0 20px 40px rgba(255, 122, 26, 0.08);
+        }
+
+        .service-card h3 {
+            color: #231C19;
+            margin-bottom: 1rem;
+            font-size: 1.6rem;
+            font-weight: 700;
+            letter-spacing: -0.4px;
+            transition: color 0.25s ease;
+        }
+
+        .service-card:hover h3 { color: #E65C00; }
+        .service-card p { color: #5C4E48; font-size: 1.2rem; line-height: 1.6; }
+
+
+        .cta-section {
+            text-align: center;
+            padding: 9.1rem 1.6rem;
+            background: linear-gradient(135deg, #FF852D 0%, #E65C00 100%);
+            color: #FFFFFF;
+        }
+
+        .cta-section h1 {
+            font-size: 3.3rem; margin-bottom: 1.3rem;
+            font-weight: 800; color: #FFFFFF; letter-spacing: -1px;
+        }
+
+        .cta-section h2 {
+            font-size: 1.5rem; margin-bottom: 2.9rem;
+            font-weight: 400; color: #FFF0E6;
+            max-width: 45.8rem; margin-left: auto; margin-right: auto; line-height: 1.6;
+        }
+
+        .cta-section .btn-secondary {
+            background-color: #FFFFFF; color: #E65C00;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+        }
+        .cta-section .btn-secondary:hover {
+            background-color: #FBF9F6; transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+        /* APP SHOWCASE */
+
+.app-showcase{
+    padding:10rem 1.6rem;
+    background:#F7EFE5;
+}
+
+.app-showcase-container{
+    max-width:120rem;
+    margin:0 auto;
+}
+
+.app-showcase-header{
+    text-align:center;
+    max-width:75rem;
+    margin:0 auto 5rem;
+}
+
+.app-showcase-header h2{
+    font-size:3.5rem;
+    font-weight:800;
+    color:#231C19;
+    margin:1rem 0;
+}
+
+.app-showcase-header p{
+    font-size:1.5rem;
+    color:#7A6A62;
+}
+
+.app-showcase-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+    gap:3rem;
+    margin-bottom:7rem;
+}
+
+.app-step{
+    background:white;
+    border-radius:24px;
+    padding:3rem;
+    text-align:center;
+    border:1px solid rgba(230,92,0,.08);
+    transition:.3s;
+}
+
+.app-step:hover{
+    transform:translateY(-6px);
+    box-shadow:0 15px 35px rgba(255,122,26,.1);
+}
+
+.app-step img{
+    width:100%;
+    max-width:220px;
+    margin:auto;
+    display:block;
+}
+
+.app-step h3{
+    margin-top:2rem;
+    margin-bottom:1rem;
+    font-size:1.8rem;
+    color:#231C19;
+}
+
+.app-step p{
+    font-size:1.3rem;
+    color:#5C4E48;
+}
+
+.app-banner{
+    display:grid;
+    grid-template-columns:1.2fr .8fr;
+    gap:4rem;
+    align-items:center;
+    background:white;
+    padding:5rem;
+    border-radius:30px;
+    border:1px solid rgba(230,92,0,.08);
+}
+
+.app-banner-content h3{
+    font-size:3rem;
+    margin:1.5rem 0;
+    color:#231C19;
+}
+
+.app-banner-content p{
+    font-size:1.4rem;
+    color:#5C4E48;
+    margin-bottom:2rem;
+}
+
+.app-banner-image{
+    text-align:center;
+}
+
+.app-banner-image img{
+    max-width:280px;
+    width:100%;
+}
+
+@media(max-width:900px){
+
+    .app-banner{
+        grid-template-columns:1fr;
+        text-align:center;
+    }
+
+    .app-banner-image{
+        order:-1;
+    }
+}
+
+        /* ══════════════════════════════════════════════════════
+           FAQ ACCORDION — Port do Accordion_01 (Radix/shadcn)
+           ══════════════════════════════════════════════════════ */
+        .faq-wrapper {
+            background-color: #F7EFE5;
+            padding: 9rem 1.6rem;
+            border-top: 1px solid rgba(230, 92, 0, 0.08);
+        }
+
+        .faq-container {
+            max-width: 76rem;
+            margin: 0 auto;
+        }
+
+        .faq-header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.4rem;
+            text-align: center;
+            margin-bottom: 5.5rem;
+        }
+
+        .faq-header .f108-badge { /* reutiliza o badge já definido */ }
+
+        .faq-header h2 {
+            font-size: 3.2rem;
+            font-weight: 800;
+            color: #231C19;
+            letter-spacing: -1px;
+            line-height: 1.2;
+            max-width: 55rem;
+        }
+
+        .faq-header p {
+            font-size: 1.4rem;
+            color: #7A6A62;
+            max-width: 48rem;
+            line-height: 1.6;
+        }
+
+        /* Accordion list */
+        .faq-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+        }
+
+        /* Item */
+        .faq-item {
+            border: 1px solid rgba(35, 28, 25, 0.1);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: border-color 0.25s ease, box-shadow 0.25s ease;
+            background: #FFFFFF;
+        }
+
+        .faq-item.open {
+            border-color: rgba(230, 92, 0, 0.3);
+            box-shadow: 0 4px 20px rgba(230, 92, 0, 0.06);
+        }
+
+        /* Trigger */
+        .faq-trigger {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            padding: 2rem 2.4rem;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            text-align: left;
+            font-family: inherit;
+            transition: background 0.2s ease;
+            gap: 1.6rem;
+        }
+
+        .faq-item.open .faq-trigger {
+            background: rgba(230, 92, 0, 0.04);
+        }
+
+        .faq-trigger-left {
+            display: flex;
+            align-items: center;
+            gap: 1.4rem;
+            flex: 1;
+        }
+
+        .faq-trigger-icon {
+            width: 2rem;
+            height: 2rem;
+            flex-shrink: 0;
+            color: rgba(35, 28, 25, 0.45);
+            transition: color 0.25s ease;
+        }
+
+        .faq-item.open .faq-trigger-icon {
+            color: #E65C00;
+        }
+
+        .faq-trigger-text {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #231C19;
+            line-height: 1.4;
+        }
+
+        /* Plus / Minus toggle */
+        .faq-toggle-icon {
+            width: 1.8rem;
+            height: 1.8rem;
+            flex-shrink: 0;
+            position: relative;
+        }
+
+        .faq-toggle-icon span {
+            display: block;
+            position: absolute;
+            background: #231C19;
+            border-radius: 2px;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        /* Horizontal bar */
+        .faq-toggle-icon span:first-child {
+            width: 100%; height: 2px;
+            top: 50%; left: 0;
+            transform: translateY(-50%);
+        }
+
+        /* Vertical bar (becomes invisible when open) */
+        .faq-toggle-icon span:last-child {
+            width: 2px; height: 100%;
+            top: 0; left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .faq-item.open .faq-toggle-icon span:last-child {
+            transform: translateX(-50%) scaleY(0);
+            opacity: 0;
+        }
+
+        .faq-item.open .faq-toggle-icon span {
+            background: #E65C00;
+        }
+
+        /* Content — animated height */
+        .faq-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+                        opacity 0.3s ease;
+            opacity: 0;
+            position: relative;
+        }
+
+        .faq-content::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 3px; height: 100%;
+            background: #E65C00;
+            border-radius: 0 2px 2px 0;
+            transform: scaleY(0);
+            transform-origin: top;
+            transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .faq-item.open .faq-content {
+            opacity: 1;
+        }
+
+        .faq-item.open .faq-content::before {
+            transform: scaleY(1);
+        }
+
+        .faq-content-inner {
+            padding: 0 2.4rem 2.2rem 5.8rem;
+            font-size: 1.35rem;
+            color: #5C4E48;
+            line-height: 1.7;
+            border-top: 1px solid rgba(35, 28, 25, 0.08);
+            padding-top: 1.8rem;
+        }
+
+        /* ── FOOTER ── */
+        footer {
+            background-color: #231C19; color: #D6C7BC;
+            text-align: center; padding: 3.3rem 1.6rem;
+            font-size: 1.1rem; font-weight: 500; letter-spacing: 0.5px;
+            border-top: 3px solid #FF7A1A;
+        }
+    </style>
+</head>
+
+<body>
+    <header class="header">
+        <div class="header-logo-container">
+            <a href="index.html">
+                <img src="logosite.PNG" alt="Logo Pede Ajuda" class="logo">
+            </a>
+        </div>
+        <nav class="nav-menu">
+            <a href="#serv">Conheça os Serviços</a>
+            <a href="SolicitarServiços.html">Solicitar Serviços</a>
+            <a href="ProfissionaisDisponiveis.html">Profissionais</a>
+            <div class="user-dropdown">
+                <button class="user-btn" id="userBtnMenu" aria-label="Menu da conta" type="button">
+                    <div id="userBtnContent" style="display:flex;align-items:center;justify-content:center;width:100%;height:100%;">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                            stroke-linecap="round" stroke-linejoin="round" class="user-icon">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="12" cy="7" r="4"></circle>
+                        </svg>
+                    </div>
+                </button>
+                <div class="dropdown-content" id="userDropdownContent">
+                    <a href="login.html" id="linkEntrar">Entrar</a>
+                    <a href="minhaconta.html" id="linkMinhaConta" style="display:none;">Minha Conta</a>
+                    <a href="configuracoes.html">Configurações</a>
+                    <a href="#" id="linkSair" style="display:none;">Sair</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- ── HERO ── -->
+    <section class="hero-section">
+        <h1>Encontre <span>profissionais</span> perto de você</h1>
+        <h2>Solicite serviços de manutenção com rapidez, segurança e avaliações reais dos profissionais.</h2>
+        <button class="btn btn-primary" onclick="window.location.href='SolicitarServiços.html'">Pedir Ajuda</button>
+    </section>
+
+    <!-- ══════════════════════════════════════════════════════
+         FEATURE108 — SEÇÃO DE SERVIÇOS COM TABS
+         Port do componente React shadcnblocks Feature108
+         ══════════════════════════════════════════════════════ -->
+    <div class="feature108-wrapper" id="serv">
+        <div class="feature108-container">
+
+            <!-- Cabeçalho -->
+            <div class="feature108-header">
+                <span class="f108-badge">Pede Ajuda</span>
+                <h1>Serviços especializados para cada necessidade</h1>
+                <p>Encontre o profissional certo para o seu problema, com rapidez e segurança.</p>
+            </div>
+
+            <!-- Tabs List -->
+            <div class="f108-tabs-list" role="tablist" id="f108TabList">
+
+                <button class="f108-tab-trigger active" role="tab" data-tab="tab-1"
+                    aria-selected="true" aria-controls="panel-tab-1">
+                    <!-- Zap icon -->
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+                    </svg>
+                    Solicitar Serviço
+                </button>
+
+                <button class="f108-tab-trigger" role="tab" data-tab="tab-2"
+                    aria-selected="false" aria-controls="panel-tab-2">
+                    <!-- Pointer icon -->
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M22 14a8 8 0 0 1-8 8"></path>
+                        <path d="M18 11v-1a2 2 0 0 0-2-2v0a2 2 0 0 0-2 2v0"></path>
+                        <path d="M14 10V9a2 2 0 0 0-2-2v0a2 2 0 0 0-2 2v1"></path>
+                        <path d="M10 9.5V4a2 2 0 0 0-2-2v0a2 2 0 0 0-2 2v10"></path>
+                        <path d="M18 11a2 2 0 1 1 4 0v3a8 8 0 0 1-8 8h-2c-2.8 0-4.5-.86-5.99-2.34l-3.6-3.6a2 2 0 0 1 2.83-2.82L7 15"></path>
+                    </svg>
+                    Profissionais Verificados
+                </button>
+
+                <button class="f108-tab-trigger" role="tab" data-tab="tab-3"
+                    aria-selected="false" aria-controls="panel-tab-3">
+                    <!-- Layout icon -->
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                        <line x1="3" y1="9" x2="21" y2="9"></line>
+                        <line x1="9" y1="21" x2="9" y2="9"></line>
+                    </svg>
+                    Como Funciona
+                </button>
+
+            </div>
+
+            <!-- Tabs Panel -->
+            <div class="f108-tabs-panel">
+
+                <!-- Tab 1: Solicitar Serviço -->
+                <div class="f108-tab-content active" id="panel-tab-1" role="tabpanel">
+                    <div class="f108-content-text">
+                        <span class="f108-content-badge">Rápido &amp; Simples</span>
+                        <h3>Solicite um serviço em minutos.</h3>
+                        <p>Descreva o problema, escolha a área e aguarde. Nossos profissionais parceiros entram em contato rapidamente para agendar o atendimento no melhor horário para você.</p>
+                        <button class="f108-content-btn" onclick="window.location.href='SolicitarServiços.html'">
+                            Solicitar Agora
+                        </button>
+                    </div>
+                    <img
+                        src="https://images.unsplash.com/photo-1621905251189-08b45d6a269e?w=800&q=80&auto=format&fit=crop"
+                        alt="Profissional de manutenção elétrica trabalhando"
+                        class="f108-content-img"
+                    />
+                </div>
+
+                <!-- Tab 2: Profissionais Verificados -->
+                <div class="f108-tab-content" id="panel-tab-2" role="tabpanel">
+                    <div class="f108-content-text">
+                        <span class="f108-content-badge">Confiança Total</span>
+                        <h3>Profissionais avaliados e verificados.</h3>
+                        <p>Todos os nossos especialistas passam por uma análise criteriosa de experiência e formação. Você vê avaliações reais de outros clientes antes de confirmar o atendimento.</p>
+                        <button class="f108-content-btn" onclick="window.location.href='ProfissionaisDisponiveis.html'">
+                            Ver Profissionais
+                        </button>
+                    </div>
+                    <img
+                        src="https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=800&q=80&auto=format&fit=crop"
+                        alt="Profissional de manutenção residencial"
+                        class="f108-content-img"
+                    />
+                </div>
+
+                <!-- Tab 3: Como Funciona -->
+                <div class="f108-tab-content" id="panel-tab-3" role="tabpanel">
+                    <div class="f108-content-text">
+                        <span class="f108-content-badge">3 Passos</span>
+                        <h3>Do pedido ao serviço concluído.</h3>
+                        <p>1. Preencha o formulário de solicitação. 2. Receba contato de um profissional da sua região. 3. Agende e acompanhe o atendimento até a conclusão com total segurança.</p>
+                        <button class="f108-content-btn" onclick="window.location.href='SolicitarServiços.html'">
+                            Começar Agora
+                        </button>
+                    </div>
+                    <img
+                        src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80&auto=format&fit=crop"
+                        alt="Técnico realizando serviço de manutenção"
+                        class="f108-content-img"
+                    />
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- ── SERVICES GRID ── -->
+    <div class="services-wrapper">
+        <section class="services-section">
+            <h2 class="section-title">Serviços Disponíveis</h2>
+            <div class="services-grid">
+                <div class="service-card">
+                    <h3>💻 Técnico em Informática</h3>
+                    <p>Formatação, manutenção e suporte para computadores e notebooks.</p>
+                </div>
+                <div class="service-card">
+                    <h3>🔌 Eletricista</h3>
+                    <p>Instalações elétricas, tomadas, chuveiros e manutenção.</p>
+                </div>
+                <div class="service-card">
+                    <h3>❄️ Refrigeração</h3>
+                    <p>Conserto e instalação de ar-condicionado e geladeiras.</p>
+                </div>
+                <div class="service-card">
+                    <h3>🎨 Pintura</h3>
+                    <p>Pintura residencial e comercial com acabamento profissional.</p>
+                </div>
+                <div class="service-card">
+                    <h3>🚿 Encanador</h3>
+                    <p>Vazamentos, manutenção hidráulica e instalação de torneiras.</p>
+                </div>
+                <div class="service-card">
+                    <h3>📶 Técnico em Internet/Wi-Fi</h3>
+                    <p>Instalação, configuração de roteadores e solução de problemas de conexão.</p>
+                </div>
+                <div class="service-card">
+                    <h3>🪑 Montador de Móveis</h3>
+                    <p>Montagem e desmontagem de móveis residenciais e corporativos.</p>
+                </div>
+                <div class="service-card">
+                    <h3>🔑 Chaveiro</h3>
+                    <p>Abertura de portas, cópia de chaves e troca de fechaduras.</p>
+                </div>
+                <div class="service-card">
+                    <h3>🧼 Serviços de Limpeza</h3>
+                    <p>Limpeza residencial, comercial e pós-obra com qualidade e organização.</p>
+                </div>
+            </div>
+        </section>
+    </div>
+    <section class="app-showcase">
+    <div class="app-showcase-container">
+
+        <div class="app-showcase-header">
+            <span class="f108-badge">Aplicativo Pede Ajuda</span>
+            <h2>Tudo o que você precisa em poucos toques</h2>
+            <p>
+                Conectamos clientes e profissionais através de um aplicativo
+                simples, rápido e seguro.
+            </p>
+        </div>
+
+        <div class="app-showcase-grid">
+
+            <div class="app-step">
+                <img src="img/app-home.png" alt="Tela inicial do aplicativo">
+                <h3>Solicite Serviços</h3>
+                <p>
+                    Abra chamados rapidamente e escolha entre diversas categorias
+                    de profissionais.
+                </p>
+            </div>
+
+            <div class="app-step">
+                <img src="img/app-cliente.png" alt="Cadastro de cliente">
+                <h3>Cadastro de Cliente</h3>
+                <p>
+                    Crie sua conta em poucos segundos e tenha acesso imediato
+                    aos serviços disponíveis.
+                </p>
+            </div>
+
+            <div class="app-step">
+                <img src="img/app-prestador.png" alt="Cadastro de prestador">
+                <h3>Cadastro de Profissionais</h3>
+                <p>
+                    Profissionais podem se cadastrar e começar a receber
+                    solicitações da sua região.
+                </p>
+            </div>
+
+        </div>
+
+        <div class="app-banner">
+
+            <div class="app-banner-content">
+                <span class="f108-badge">Nossa Missão</span>
+
+                <h3>
+                    Aproximar quem precisa de ajuda de quem sabe resolver.
+                </h3>
+
+                <p>
+                    O Pede Ajuda oferece segurança, praticidade e rapidez para
+                    encontrar profissionais qualificados em diversas áreas.
+                </p>
+
+                <button class="btn btn-primary">
+                    Em breve na Play Store
+                </button>
+            </div>
+
+            <div class="app-banner-image">
+                <img src="img/app-mascote.png" alt="Mascote Pede Ajuda">
+            </div>
+
+        </div>
+
+    </div>
+</section>
+    <!-- ══════════════════════════════════════════════════════
+         FAQ ACCORDION — Port do Accordion_01 (ruixen + originui)
+         ══════════════════════════════════════════════════════ -->
+    <div class="faq-wrapper" id="faq">
+        <div class="faq-container">
+
+            <div class="faq-header">
+                <span class="f108-badge">Dúvidas Frequentes</span>
+                <h2>Perguntas que todo mundo faz</h2>
+                <p>Encontre as respostas para as principais dúvidas sobre pagamentos, segurança, funcionamento dos serviços e como se cadastrar como profissional.</p>
+            </div>
+
+            <div class="faq-list" id="faqList">
+
+                <!-- Item 1: Pagamento -->
+                <div class="faq-item" data-faq="1">
+                    <button class="faq-trigger" aria-expanded="false">
+                        <div class="faq-trigger-left">
+                            <svg class="faq-trigger-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect>
+                                <line x1="1" y1="10" x2="23" y2="10"></line>
+                            </svg>
+                            <span class="faq-trigger-text">Quais são as formas de pagamento aceitas?</span>
+                        </div>
+                        <div class="faq-toggle-icon" aria-hidden="true">
+                            <span></span>
+                            <span></span>
+                        </div>
+                    </button>
+                    <div class="faq-content" role="region">
+                        <div class="faq-content-inner">
+                            O pagamento é combinado diretamente entre o cliente e o profissional no momento do atendimento. Aceitamos as principais formas: <strong>Pix, cartão de débito/crédito, dinheiro em espécie e transferência bancária</strong>. O valor do serviço é acordado previamente na solicitação, sem cobranças surpresa. Recomendamos sempre confirmar os valores com o profissional antes de iniciar o serviço.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Item 2: Segurança -->
+                <div class="faq-item" data-faq="2">
+                    <button class="faq-trigger" aria-expanded="false">
+                        <div class="faq-trigger-left">
+                            <svg class="faq-trigger-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                            </svg>
+                            <span class="faq-trigger-text">O Pede Ajuda é seguro? Como protegem meus dados?</span>
+                        </div>
+                        <div class="faq-toggle-icon" aria-hidden="true">
+                            <span></span>
+                            <span></span>
+                        </div>
+                    </button>
+                    <div class="faq-content" role="region">
+                        <div class="faq-content-inner">
+                            Sim! A segurança dos seus dados é nossa prioridade. Seguimos rigorosamente a <strong>Lei Geral de Proteção de Dados (LGPD)</strong>. Seus dados pessoais como CPF, e-mail e telefone são armazenados de forma criptografada e nunca são compartilhados com terceiros sem o seu consentimento. Todos os profissionais passam por uma verificação de identidade antes de serem aprovados na plataforma. Você pode gerenciar, atualizar ou excluir seus dados a qualquer momento pelo painel de configurações.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Item 3: Políticas -->
+                <div class="faq-item" data-faq="3">
+                    <button class="faq-trigger" aria-expanded="false">
+                        <div class="faq-trigger-left">
+                            <svg class="faq-trigger-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                <polyline points="14 2 14 8 20 8"></polyline>
+                                <line x1="16" y1="13" x2="8" y2="13"></line>
+                                <line x1="16" y1="17" x2="8" y2="17"></line>
+                                <polyline points="10 9 9 9 8 9"></polyline>
+                            </svg>
+                            <span class="faq-trigger-text">Quais são as políticas de uso da plataforma?</span>
+                        </div>
+                        <div class="faq-toggle-icon" aria-hidden="true">
+                            <span></span>
+                            <span></span>
+                        </div>
+                    </button>
+                    <div class="faq-content" role="region">
+                        <div class="faq-content-inner">
+                            Ao se cadastrar, o usuário concorda com nossos <strong>Termos de Uso e Política de Privacidade</strong>. Em resumo: (1) Os profissionais são responsáveis pela qualidade do serviço prestado. (2) O Pede Ajuda atua como intermediador entre cliente e profissional. (3) É proibido o uso da plataforma para fins ilícitos ou fraudulentos. (4) Avaliações falsas ou condutas abusivas resultam em banimento imediato. (5) Disputas devem ser reportadas pelo e-mail de suporte para mediação.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Item 4: Como funcionam os serviços -->
+                <div class="faq-item" data-faq="4">
+                    <button class="faq-trigger" aria-expanded="false">
+                        <div class="faq-trigger-left">
+                            <svg class="faq-trigger-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <polyline points="12 6 12 12 16 14"></polyline>
+                            </svg>
+                            <span class="faq-trigger-text">Como funciona o processo de solicitação de serviço?</span>
+                        </div>
+                        <div class="faq-toggle-icon" aria-hidden="true">
+                            <span></span>
+                            <span></span>
+                        </div>
+                    </button>
+                    <div class="faq-content" role="region">
+                        <div class="faq-content-inner">
+                            O processo é simples e rápido em <strong>3 etapas</strong>:<br><br>
+                            <strong>1. Solicitação:</strong> Preencha o formulário com seu nome, contato, localização, tipo de serviço necessário e descreva o problema detalhadamente.<br><br>
+                            <strong>2. Contato:</strong> Um profissional verificado da sua região entrará em contato pelo telefone ou e-mail cadastrado para combinar os detalhes, horário e valor do serviço.<br><br>
+                            <strong>3. Atendimento:</strong> O profissional realiza o serviço no local e horário combinado. Após a conclusão, você pode avaliar o atendimento na plataforma.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Item 5: Cadastro como profissional -->
+                <div class="faq-item" data-faq="5">
+                    <button class="faq-trigger" aria-expanded="false">
+                        <div class="faq-trigger-left">
+                            <svg class="faq-trigger-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+                                <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+                            </svg>
+                            <span class="faq-trigger-text">Como me cadastrar como profissional no Pede Ajuda?</span>
+                        </div>
+                        <div class="faq-toggle-icon" aria-hidden="true">
+                            <span></span>
+                            <span></span>
+                        </div>
+                    </button>
+                    <div class="faq-content" role="region">
+                        <div class="faq-content-inner">
+                            Para fazer parte da nossa rede de profissionais, siga os passos:<br><br>
+                            <strong>1.</strong> Acesse a página de <a href="Profissional.html" style="color:#E65C00;font-weight:600;">Cadastro de Profissional</a> e preencha o formulário com seus dados pessoais e profissionais.<br><br>
+                            <strong>2.</strong> Informe sua área de atuação, tempo de experiência, formação e descreva os serviços que você realiza.<br><br>
+                            <strong>3.</strong> Nossa equipe analisa o cadastro e, se aprovado, seu perfil ficará visível para clientes da sua região.<br><br>
+                            O cadastro é <strong>gratuito</strong>. Profissionais aprovados recebem solicitações de serviço diretamente pelo telefone e e-mail cadastrados.
+                        </div>
+                    </div>
+                </div>
+
+            </div><!-- /faq-list -->
+        </div><!-- /faq-container -->
+    </div><!-- /faq-wrapper -->
+    
+
+    <!-- ── CTA ── -->
+    <section class="cta-section">
+        <h1>Você quer fazer parte de nossa equipe?</h1>
+        <h2>Se você é um profissional da área manual, tente ser aprovado para fazer parte do Pede Ajuda!</h2>
+        <button class="btn btn-secondary" onclick="window.location.href='Profissional.html'">Cadastre-se</button>
+    </section>
+    
+    <footer>
+        © 2026 Pede Ajuda - Todos os direitos reservados.
+    </footer>
+
+    <script>
+        /* ════════════════════════════════════════════════
+           1. FEATURE108 — LÓGICA DAS TABS (Radix Tabs port)
+           ════════════════════════════════════════════════ */
+        (function () {
+            const triggers = document.querySelectorAll('.f108-tab-trigger');
+            const panels   = document.querySelectorAll('.f108-tab-content');
+
+            triggers.forEach(function (trigger) {
+                trigger.addEventListener('click', function () {
+                    const targetTab = this.dataset.tab;
+
+                    /* Desativa todos */
+                    triggers.forEach(function (t) {
+                        t.classList.remove('active');
+                        t.setAttribute('aria-selected', 'false');
+                    });
+                    panels.forEach(function (p) {
+                        p.classList.remove('active');
+                    });
+
+                    /* Ativa o selecionado */
+                    this.classList.add('active');
+                    this.setAttribute('aria-selected', 'true');
+                    const panel = document.getElementById('panel-' + targetTab);
+                    if (panel) panel.classList.add('active');
+                });
+            });
+        })();
+
+        /* ════════════════════════════════════════════════
+           3. FAQ ACCORDION — Animate height (Accordion_01 port)
+           ════════════════════════════════════════════════ */
+        (function () {
+            const items = document.querySelectorAll('.faq-item');
+
+            items.forEach(function (item) {
+                const trigger  = item.querySelector('.faq-trigger');
+                const content  = item.querySelector('.faq-content');
+                const inner    = item.querySelector('.faq-content-inner');
+
+                trigger.addEventListener('click', function () {
+                    const isOpen = item.classList.contains('open');
+
+                    /* Fecha todos */
+                    items.forEach(function (i) {
+                        i.classList.remove('open');
+                        i.querySelector('.faq-trigger').setAttribute('aria-expanded', 'false');
+                        i.querySelector('.faq-content').style.maxHeight = '0';
+                        i.querySelector('.faq-content').style.opacity   = '0';
+                    });
+
+                    /* Abre o clicado, se estava fechado */
+                    if (!isOpen) {
+                        item.classList.add('open');
+                        trigger.setAttribute('aria-expanded', 'true');
+                        content.style.maxHeight = inner.scrollHeight + 60 + 'px';
+                        content.style.opacity   = '1';
+                    }
+                });
+            });
+        })();
+
+        /* ════════════════════════════════════════════════
+           2. DROPDOWN DO USUÁRIO (localStorage)
+           ════════════════════════════════════════════════ */
+        document.addEventListener('DOMContentLoaded', function () {
+            const userBtn         = document.getElementById('userBtnMenu');
+            const userBtnContent  = document.getElementById('userBtnContent');
+            const dropdownContent = document.getElementById('userDropdownContent');
+            const linkEntrar      = document.getElementById('linkEntrar');
+            const linkMinhaConta  = document.getElementById('linkMinhaConta');
+            const linkSair        = document.getElementById('linkSair');
+
+            const usuario = localStorage.getItem('usuarioLogado');
+
+            if (usuario && userBtnContent) {
+                const inicial = usuario.trim().charAt(0).toUpperCase();
+                userBtnContent.innerHTML = '<span class="user-initials">' + inicial + '</span>';
+                if (linkEntrar)     linkEntrar.style.display    = 'none';
+                if (linkMinhaConta) linkMinhaConta.style.display = 'block';
+                if (linkSair)       linkSair.style.display       = 'block';
+            }
+
+            if (userBtn && dropdownContent) {
+                userBtn.addEventListener('click', function (event) {
+                    event.stopPropagation();
+                    dropdownContent.classList.toggle('active');
+                });
+                document.addEventListener('click', function (event) {
+                    if (!userBtn.contains(event.target) && !dropdownContent.contains(event.target)) {
+                        dropdownContent.classList.remove('active');
+                    }
+                });
+            }
+
+            if (linkSair) {
+                linkSair.addEventListener('click', function (event) {
+                    event.preventDefault();
+                    localStorage.removeItem('usuarioLogado');
+                    window.location.reload();
+                });
+            }
+        });
+    </script>
+</body>
+</html>

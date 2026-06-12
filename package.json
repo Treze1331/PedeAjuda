@@ -1,7 +1,15 @@
 {
+  "name": "pede-ajuda",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
   "dependencies": {
     "body-parser": "^2.2.2",
-    "express": "^5.2.1",
-    "sqlite3": "^6.0.1"
+    "express": "^4.19.2",
+    "motion": "^12.40.0",
+    "sqlite3": "^5.1.7"
   }
 }

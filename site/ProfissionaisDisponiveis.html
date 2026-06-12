@@ -1,0 +1,1075 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profissionais Disponíveis - Pede Ajuda</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            font-size: 65%; /* ESCALA PADRÃO DO SEU PROJETO (1rem = 6.5px) */
+            background-color: #ffe0ce94;
+        }
+
+        body {
+            background-color: #ffe0ce94;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            color: #231C19;
+            -webkit-font-smoothing: antialiased;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            padding: 0; /* Removido padding do body para não quebrar o Header */
+        }
+
+        /* ---- HEADER ULTRA CLEAN — ESCALA 100% FIEL AO SEU SISTEMA ---- */
+        header.header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0px 68px;
+            background-color: rgba(252, 249, 245, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 2px solid rgba(255, 122, 26, 0.15);
+            box-shadow: 0 4px 20px rgba(35, 28, 25, 0.03);
+            transition: all 0.3s ease;
+            margin: 0;
+        }
+
+        .header-logo-container {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo {
+            width: 136px;
+            height: auto;
+            display: block;
+        }
+
+        .logo:hover {
+            transform: scale(1.02);
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 1.2rem;
+            align-items: center;
+        }
+
+        .nav-menu a {
+            text-decoration: none;
+            color: #5C4E48;
+            font-weight: 600;
+            font-size: 1.25rem;
+            letter-spacing: -0.1px;
+            padding: 0.8rem 1.6rem;
+            border-radius: 99px;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .nav-menu a:hover {
+            color: #FF6B00;
+            background-color: rgba(255, 122, 26, 0.08);
+        }
+
+        /* Destaque estrito da página atual ativa */
+        .nav-menu a[href="ProfissionaisDisponiveis.html"] {
+            background: linear-gradient(135deg, #FF8F3D 0%, #FF6B00 100%);
+            transform: translateY(-1px);
+            color: #ffffff;
+            box-shadow: 0 6px 20px rgba(230, 92, 0, 0.3);
+            font-weight: 700;
+        }
+
+        /* SYSTEM DROPDOWN DO USUÁRIO */
+        .user-dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .user-btn {
+            background: #F7EFE5;
+            border: 1px solid rgba(230, 92, 0, 0.2);
+            border-radius: 50%;
+            width: 38px;
+            height: 38px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0;
+            color: #5C4E48;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.04);
+        }
+
+        .user-btn:hover {
+            border-color: #E65C00;
+            background: #fff;
+        }
+
+        .user-icon {
+            width: 18px;
+            height: 18px;
+        }
+
+        .user-initials {
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: #FFFFFF;
+            background: linear-gradient(135deg, #FF7A1A 0%, #E65C00 100%);
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            right: 0;
+            background-color: #FFFFFF;
+            min-width: 160px;
+            box-shadow: 0 10px 30px rgba(35, 28, 25, 0.12);
+            border: 1px solid rgba(230, 92, 0, 0.1);
+            border-radius: 16px;
+            padding: 0.8rem 0;
+            z-index: 1100;
+            margin-top: 8px;
+        }
+
+        .dropdown-content.active {
+            display: block;
+        }
+
+        .dropdown-content a {
+            color: #231C19 !important;
+            padding: 1rem 1.6rem !important;
+            text-decoration: none;
+            display: block;
+            font-size: 1.2rem !important;
+            font-weight: 500 !important;
+            border-radius: 0 !important;
+            background: transparent !important;
+            box-shadow: none !important;
+            transform: none !important;
+            text-align: left;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #FFF0E6 !important;
+            color: #E65C00 !important;
+        }
+
+        #linkSair {
+            color: #C62828 !important;
+            border-top: 1px solid #EFE4DA;
+            margin-top: 4px;
+        }
+
+        #linkSair:hover {
+            background-color: #FFF5F5 !important;
+        }
+
+        /* RESPONSIVIDADE DO HEADER */
+        @media (max-width: 992px) {
+            header.header { padding: 1.3rem 3.3rem; }
+        }
+
+        @media (max-width: 768px) {
+            header.header {
+                padding: 1.1rem 2rem;
+                flex-direction: column;
+                gap: 1rem;
+            }
+            .nav-menu {
+                width: 100%;
+                justify-content: center;
+                flex-wrap: wrap;
+                gap: 0.5rem;
+            }
+            .nav-menu a {
+                padding: 0.6rem 1.1rem;
+                font-size: 1.1rem;
+            }
+            .dropdown-content {
+                right: 50%;
+                transform: translateX(50%);
+            }
+        }
+
+        /* ---- MAIN CONTAINER ---- */
+        .container {
+            max-width: 108rem;
+            margin: 0 auto;
+            width: 100%;
+            padding: 5rem 2rem;
+            flex-grow: 1;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 4rem;
+            color: #231C19;
+            font-size: 3.4rem;
+            font-weight: 800;
+            letter-spacing: -1px;
+        }
+
+        h1::after {
+            content: '';
+            display: block;
+            width: 7rem;
+            height: 4px;
+            background: linear-gradient(135deg, #FF7A1A 0%, #E65C00 100%);
+            margin: 1.2rem auto 0 auto;
+            border-radius: 4px;
+        }
+
+        /* ---- FILTRO REESCALADO ---- */
+        .filtro-wrapper {
+            background: #FFFFFF;
+            border-radius: 16px;
+            padding: 2.2rem 2.6rem;
+            margin-bottom: 4rem;
+            border: 1px solid rgba(230, 92, 0, 0.08);
+            box-shadow: 0 10px 30px rgba(35, 28, 25, 0.03);
+        }
+
+        .filtro-titulo {
+            font-size: 1.25rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            color: #BAA18A;
+            margin-bottom: 1.6rem;
+        }
+
+        .filtro-chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .chip {
+            padding: 1rem 2rem;
+            border-radius: 99px;
+            font-size: 1.3rem;
+            font-weight: 600;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+            background: #F4EAE1;
+            color: #5C4E48;
+            white-space: nowrap;
+            user-select: none;
+        }
+
+        .chip:hover {
+            border-color: #FF6B00;
+            color: #FF6B00;
+            background: rgba(255, 107, 0, 0.06);
+            transform: translateY(-1px);
+        }
+
+        .chip.ativo {
+            background: linear-gradient(135deg, #FF7A1A 0%, #E65C00 100%);
+            color: #FFF;
+            border-color: transparent;
+            box-shadow: 0 5px 15px rgba(255, 107, 0, 0.25);
+        }
+
+        .chip-todos {
+            background: #231C19;
+            color: #FFF;
+            border-color: transparent;
+        }
+
+        .chip-todos:hover {
+            background: #453930;
+            color: #FFF;
+            border-color: transparent;
+        }
+
+        .chip-todos.ativo {
+            background: #231C19;
+            box-shadow: 0 5px 15px rgba(35, 28, 25, 0.2);
+        }
+
+        /* ---- SEÇÃO FILTRADA ---- */
+        .secao-destaque {
+            margin-bottom: 4.5rem;
+        }
+
+        .secao-label {
+            display: flex;
+            align-items: center;
+            gap: 1.2rem;
+            margin-bottom: 2.2rem;
+        }
+
+        .secao-label-text {
+            font-size: 1.4rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            color: #E65C00;
+        }
+
+        .secao-label-line {
+            flex: 1;
+            height: 2px;
+            background: linear-gradient(to right, rgba(230, 92, 0, 0.25), transparent);
+            border-radius: 2px;
+        }
+
+        .secao-label-count {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #FFF;
+            background: #E65C00;
+            padding: 0.3rem 1rem;
+            border-radius: 99px;
+        }
+
+        /* ---- SEÇÃO OUTRAS ÁREAS ---- */
+        .secao-outras {
+            margin-top: 3rem;
+        }
+
+        .secao-outras-header {
+            display: flex;
+            align-items: center;
+            gap: 1.2rem;
+            margin-bottom: 2.5rem;
+            padding-top: 3rem;
+            border-top: 2px dashed #EBD9C8;
+        }
+
+        .secao-outras-label {
+            font-size: 1.4rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            color: #BAA18A;
+        }
+
+        .secao-outras-line {
+            flex: 1;
+            height: 2px;
+            background: linear-gradient(to right, rgba(186,161,138,0.25), transparent);
+            border-radius: 2px;
+        }
+
+        .grupo-area {
+            margin-bottom: 3.5rem;
+        }
+
+        .grupo-area-titulo {
+            font-size: 1.2rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.7px;
+            color: #7A6559;
+            margin-bottom: 1.8rem;
+            padding: 0.6rem 1.4rem;
+            background: #EBD9C8;
+            border-radius: 8px;
+            display: inline-block;
+        }
+
+        /* ---- GRID DE CARDS REESCALADO ---- */
+        .profissionais-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(29rem, 1fr));
+            gap: 3rem;
+        }
+
+        .secao-outras .card {
+            opacity: 0.82;
+            transition: opacity 0.2s ease, transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease;
+        }
+
+        .card:hover,
+        .secao-outras .card:hover {
+            opacity: 1;
+            transform: translateY(-5px) !important;
+            box-shadow: 0 15px 35px rgba(35, 28, 25, 0.1) !important;
+        }
+
+        /* ---- CARDS ESCALA CONTROLADA ---- */
+        .card {
+            background: #FFFFFF;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(35, 28, 25, 0.03);
+            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease, opacity 0.2s ease;
+            display: flex;
+            flex-direction: column;
+            border-top: 5px solid #FF6B00;
+            border-left: 1px solid rgba(235, 217, 200, 0.5);
+            border-right: 1px solid rgba(235, 217, 200, 0.5);
+            border-bottom: 1px solid rgba(235, 217, 200, 0.5);
+        }
+
+        .card-content {
+            padding: 2.5rem;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .card-nome {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #231C19;
+            margin-bottom: 0.4rem;
+            letter-spacing: -0.3px;
+        }
+
+        .card-area {
+            font-size: 1.15rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            color: #E65C00;
+            margin-bottom: 1.8rem;
+        }
+
+        .card-info {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.2rem;
+            margin-bottom: 1.8rem;
+            font-size: 1.2rem;
+            background: #FDF6F0;
+            padding: 1.4rem;
+            border-radius: 12px;
+            border: 1px solid #F3E6DA;
+        }
+
+        .card-info-item {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card-info-item.full-width {
+            grid-column: span 2;
+        }
+
+        .card-info-label {
+            font-weight: 600;
+            color: #BAA18A;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+            margin-bottom: 0.2rem;
+        }
+
+        .card-info-valor {
+            color: #3F3530;
+            font-weight: 500;
+            word-break: break-all;
+        }
+
+        .card-descricao {
+            font-size: 1.3rem;
+            color: #5C4E48;
+            line-height: 1.6;
+            margin-bottom: 1.8rem;
+            flex-grow: 1;
+        }
+
+        .card-experiencia {
+            background-color: #FDF6F0;
+            padding: 1rem 1.4rem;
+            border-radius: 8px;
+            margin-bottom: 1.8rem;
+            font-size: 1.2rem;
+            color: #3F3530;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid #F3E6DA;
+        }
+
+        .card-experiencia-label {
+            font-weight: 600;
+            color: #5C4E48;
+        }
+
+        .card-experiencia-badge {
+            background: #231C19;
+            color: #FFF;
+            padding: 0.3rem 0.9rem;
+            border-radius: 99px;
+            font-size: 1.05rem;
+            font-weight: 700;
+        }
+
+        .btn-solicitar {
+            width: 100%;
+            padding: 1.4rem;
+            background: linear-gradient(135deg, #FF7A1A 0%, #E65C00 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.3rem;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(230, 92, 0, 0.2);
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .btn-solicitar:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 20px rgba(230, 92, 0, 0.35);
+        }
+
+        .btn-solicitar:active {
+            transform: scale(0.99);
+        }
+
+        .btn-voltar {
+            padding: 1.4rem 4rem;
+            background-color: #231C19;
+            color: white;
+            border: none;
+            border-radius: 99px;
+            font-size: 1.35rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            margin: 4.5rem auto 0 auto;
+            display: block;
+            box-shadow: 0 5px 15px rgba(35, 28, 25, 0.15);
+        }
+
+        .btn-voltar:hover {
+            background-color: #453930;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(35, 28, 25, 0.25);
+        }
+
+        .estado-vazio {
+            grid-column: 1/-1;
+            text-align: center;
+            color: #BAA18A;
+            padding: 6rem 2rem;
+            font-size: 1.5rem;
+            font-weight: 500;
+        }
+
+        /* Animação de entrada fluida */
+        @keyframes fadeSlideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        .card {
+            animation: fadeSlideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+        }
+
+        /* RESPONSIVIDADE INTERNA DO GRID */
+        @media (max-width: 600px) {
+            h1 { font-size: 2.8rem; }
+            .filtro-wrapper { padding: 1.8rem 1.6rem; }
+            .chip { padding: 0.8rem 1.5rem; font-size: 1.2rem; }
+            .card-content { padding: 2rem; }
+        }
+
+        /* FOOTER UNIVERSAL DO SITE */
+        footer {
+            background-color: #231C19;
+            color: #D6C7BC;
+            text-align: center;
+            padding: 3.3rem 1.6rem;
+            font-size: 1.1rem;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            border-top: 3px solid #FF7A1A;
+            margin-top: auto;
+        }
+
+        /* ==========================================================
+           ESTILIZAÇÃO DO MODAL DE SOLICITAÇÃO / BLOQUEIO 
+           ========================================================== */
+        .modal-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(35, 28, 25, 0.6);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            z-index: 2000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal-container.ativo {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .modal-box {
+            background: #FFFFFF;
+            width: 90%;
+            max-width: 44rem;
+            border-radius: 24px;
+            padding: 3.5rem;
+            text-align: center;
+            border: 1px solid rgba(255, 122, 26, 0.15);
+            box-shadow: 0 20px 50px rgba(35, 28, 25, 0.15);
+            transform: scale(0.9);
+            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .modal-container.ativo .modal-box {
+            transform: scale(1);
+        }
+
+        .modal-icon {
+            width: 64px;
+            height: 64px;
+            margin: 0 auto 2rem auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+
+        /* Cores dinâmicas para o modal de erro/atenção */
+        .modal-icon.atencao {
+            background-color: #FFF0E6;
+            color: #FF6B00;
+        }
+        
+        .modal-icon.sucesso {
+            background-color: #E6F4EA;
+            color: #137333;
+        }
+
+        .modal-titulo {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: #231C19;
+            margin-bottom: 1.2rem;
+            letter-spacing: -0.5px;
+        }
+
+        .modal-texto {
+            font-size: 1.35rem;
+            color: #5C4E48;
+            line-height: 1.6;
+            margin-bottom: 2.5rem;
+        }
+
+        .modal-botoes {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .btn-modal-principal {
+            width: 100%;
+            padding: 1.4rem;
+            background: linear-gradient(135deg, #FF7A1A 0%, #E65C00 100%);
+            color: #ffffff;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.3rem;
+            font-weight: 700;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+            box-shadow: 0 4px 15px rgba(230, 92, 0, 0.2);
+            transition: all 0.2s ease;
+        }
+
+        .btn-modal-principal:hover {
+            box-shadow: 0 6px 20px rgba(230, 92, 0, 0.35);
+            transform: translateY(-1px);
+        }
+
+        .btn-modal-secundario {
+            width: 100%;
+            padding: 1.2rem;
+            background: transparent;
+            color: #7A6559;
+            border: 2px solid #EFE4DA;
+            border-radius: 12px;
+            font-size: 1.25rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-modal-secundario:hover {
+            background: #FDF6F0;
+            color: #231C19;
+            border-color: #BAA18A;
+        }
+    </style>
+</head>
+<body>
+
+    <header class="header">
+        <div class="header-logo-container">
+            <a href="index.html">
+                <img src="logosite.PNG" alt="Logo Pede Ajuda" class="logo">
+            </a>
+        </div>
+        <nav class="nav-menu">
+            <a href="index.html#serv">Conheça os Serviços</a>
+            <a href="SolicitarServiços.html">Solicitar Serviços</a>
+            <a href="ProfissionaisDisponiveis.html">Profissionais</a>
+            
+            <div class="user-dropdown">
+                <button class="user-btn" id="userBtnMenu" aria-label="Menu da conta" type="button">
+                    <div id="userBtnContent" style="display: flex; align-items: center; justify-content: center; width: 100%; height: 100%;">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="user-icon">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="12" cy="7" r="4"></circle>
+                        </svg>
+                    </div>
+                </button>
+                <div class="dropdown-content" id="userDropdownContent">
+                    <a href="login.html" id="linkEntrar">Entrar</a>
+                    <a href="minhaconta.html" id="linkMinhaConta" style="display: none;">Minha Conta</a>
+                    <a href="configuracoes.html">Configurações</a>
+                    <a href="#" id="linkSair" style="display: none;">Sair</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container">
+        <h1>Profissionais Disponíveis</h1>
+
+        <div class="filtro-wrapper">
+            <div class="filtro-titulo">Filtrar por área</div>
+            <div class="filtro-chips" id="filtroChips">
+                <div class="chip chip-todos ativo" data-area="todos" onclick="filtrarArea('todos', this)">
+                    Todos
+                </div>
+            </div>
+        </div>
+
+        <div id="conteudoPrincipal"></div>
+
+        <button class="btn-voltar" onclick="window.location.href='index.html'">← Voltar para o site</button>
+    </div>
+
+    <!-- ==========================================================
+       ESTRUTURA COMPACTA E ELEGANTE DO NOVO MODAL DE AVISO
+       ========================================================== */ -->
+    <div class="modal-container" id="modalAjuda">
+        <div class="modal-box">
+            <div class="modal-icon" id="modalIcone"></div>
+            <div class="modal-titulo" id="modalTitulo">Acesso Restrito</div>
+            <div class="modal-texto" id="modalTexto">Texto informativo</div>
+            <div class="modal-botoes" id="modalBotoes"></div>
+        </div>
+    </div>
+
+    <footer>
+        © 2026 Pede Ajuda - Todos os direitos reservados.
+    </footer>
+
+    <script>
+        let todosOsProfissionais = [];
+        let areaAtiva = 'todos';
+
+        /* ---------- Carrega dados da API ---------- */
+        async function obterDadosProfissionais() {
+            const conteudo = document.getElementById('conteudoPrincipal');
+
+            try {
+                const resposta = await fetch('/api/profissionais');
+                if (!resposta.ok) throw new Error('Falha na resposta da API');
+
+                const listagem = await resposta.json();
+                todosOsProfissionais = listagem;
+
+                if (listagem.length === 0) {
+                    conteudo.innerHTML = `<p class="estado-vazio">Nenhum profissional localizado no banco de dados.</p>`;
+                    return;
+                }
+
+                gerarChipsDeFiltro(listagem);
+                renderizarProfissionais('todos');
+
+            } catch (erro) {
+                console.error("Erro ao carregar dados:", erro);
+                conteudo.innerHTML = `<p style="text-align:center;color:#c0392b;font-weight:bold;font-size:1.4rem;padding:4rem;">Não foi possível carregar os profissionais. Verifique a conexão do servidor.</p>`;
+            }
+        }
+
+        /* ---------- Gera chips de área únicos ---------- */
+        function gerarChipsDeFiltro(lista) {
+            const areas = [...new Set(lista.map(p => p.area))].sort();
+            const chipContainer = document.getElementById('filtroChips');
+
+            areas.forEach(area => {
+                const chip = document.createElement('div');
+                chip.className = 'chip';
+                chip.dataset.area = area;
+                chip.textContent = area;
+                chip.onclick = () => filtrarArea(area, chip);
+                chipContainer.appendChild(chip);
+            });
+        }
+
+        /* ---------- Alterna filtro ---------- */
+        function filtrarArea(area, chipClicado) {
+            areaAtiva = area;
+
+            document.querySelectorAll('.chip').forEach(c => c.classList.remove('ativo'));
+            chipClicado.classList.add('ativo');
+
+            renderizarProfissionais(area);
+        }
+
+        /* ---------- Renderiza a lista conforme filtro ---------- */
+        function renderizarProfissionais(area) {
+            const conteudo = document.getElementById('conteudoPrincipal');
+            conteudo.innerHTML = '';
+
+            if (area === 'todos') {
+                const grid = criarGrid(todosOsProfissionais);
+                conteudo.appendChild(grid);
+                return;
+            }
+
+            const emDestaque  = todosOsProfissionais.filter(p => p.area === area);
+            const outrosProfis = todosOsProfissionais.filter(p => p.area !== area);
+
+            // -- Seção destaque --
+            const secaoDest = document.createElement('div');
+            secaoDest.className = 'secao-destaque';
+
+            const labelDest = document.createElement('div');
+            labelDest.className = 'secao-label';
+            labelDest.innerHTML = `
+                <span class="secao-label-text">${area}</span>
+                <span class="secao-label-count">${emDestaque.length} profissional${emDestaque.length !== 1 ? 'is' : ''}</span>
+                <div class="secao-label-line"></div>
+            `;
+            secaoDest.appendChild(labelDest);
+            secaoDest.appendChild(criarGrid(emDestaque));
+            conteudo.appendChild(secaoDest);
+
+            // -- Seção outras áreas --
+            if (outrosProfis.length > 0) {
+                const secaoOutras = document.createElement('div');
+                secaoOutras.className = 'secao-outras';
+
+                const headerOutras = document.createElement('div');
+                headerOutras.className = 'secao-outras-header';
+                headerOutras.innerHTML = `
+                    <div class="secao-outras-line"></div>
+                    <span class="secao-outras-label">Outras Áreas</span>
+                    <div class="secao-outras-line" style="background:linear-gradient(to left,rgba(186,161,138,0.25),transparent);"></div>
+                `;
+                secaoOutras.appendChild(headerOutras);
+
+                const outrasAreas = [...new Set(outrosProfis.map(p => p.area))].sort();
+                outrasAreas.forEach(a => {
+                    const profsDaArea = outrosProfis.filter(p => p.area === a);
+
+                    const grupo = document.createElement('div');
+                    grupo.className = 'grupo-area';
+
+                    const tituloGrupo = document.createElement('div');
+                    tituloGrupo.className = 'grupo-area-titulo';
+                    tituloGrupo.textContent = a;
+                    grupo.appendChild(tituloGrupo);
+                    grupo.appendChild(criarGrid(profsDaArea));
+                    secaoOutras.appendChild(grupo);
+                });
+
+                conteudo.appendChild(secaoOutras);
+            }
+        }
+
+        /* ---------- Cria um grid de cards ---------- */
+        function criarGrid(lista) {
+            const grid = document.createElement('div');
+            grid.className = 'profissionais-grid';
+
+            if (lista.length === 0) {
+                grid.innerHTML = `<div class="estado-vazio">Nenhum profissional encontrado nesta área.</div>`;
+                return grid;
+            }
+
+            lista.forEach((prof, i) => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.style.animationDelay = `${i * 0.05}s`;
+                card.innerHTML = `
+                    <div class="card-content">
+                        <div class="card-nome">${prof.nome}</div>
+                        <div class="card-area">${prof.area}</div>
+
+                        <div class="card-info">
+                            <div class="card-info-item">
+                                <span class="card-info-label">Cidade</span>
+                                <span class="card-info-valor">${prof.cidade}</span>
+                            </div>
+                            <div class="card-info-item">
+                                <span class="card-info-label">Telefone</span>
+                                <span class="card-info-valor">${prof.telefone}</span>
+                            </div>
+                            <div class="card-info-item full-width">
+                                <span class="card-info-label">E-mail</span>
+                                <span class="card-info-valor">${prof.email}</span>
+                            </div>
+                        </div>
+
+                        <div class="card-descricao">${prof.experiencia_texto}</div>
+
+                        <div class="card-experiencia">
+                            <span class="card-experiencia-label">Tempo de Prática</span>
+                            <span class="card-experiencia-badge">${prof.tempo_experiencia}</span>
+                        </div>
+
+                        <button class="btn-solicitar" onclick="solicitarProfissional('${prof.nome}')">
+                            Solicitar Atendimento
+                        </button>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+
+            return grid;
+        }
+
+        /* ---------- NOVA LÓGICA DE SOLICITAÇÃO COM INTERFACE BONITA ---------- */
+        function fecharModal() {
+            document.getElementById('modalAjuda').classList.remove('ativo');
+        }
+
+        function solicitarProfissional(nome) {
+            const usuario = localStorage.getItem('usuarioLogado');
+            const modal = document.getElementById('modalAjuda');
+            const icone = document.getElementById('modalIcone');
+            const titulo = document.getElementById('modalTitulo');
+            const texto = document.getElementById('modalTexto');
+            const botoes = document.getElementById('modalBotoes');
+
+            if (!usuario) {
+                // Caso NÃO esteja logado: Exibe aviso de restrição
+                icone.className = "modal-icon atencao";
+                icone.innerHTML = `
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                        <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                    </svg>
+                `;
+                titulo.textContent = "Inicie sua Sessão";
+                texto.textContent = `Para solicitar o atendimento de ${nome}, você precisa estar conectado à sua conta de cliente.`;
+                
+                botoes.innerHTML = `
+                    <button class="btn-modal-principal" onclick="window.location.href='cadastrocliente.html'">Criar Conta de Cliente</button>
+                    <button class="btn-modal-secundario" onclick="fecharModal()">Talvez mais tarde</button>
+                `;
+            } else {
+                // Caso ESTEJA logado: Exibe feedback elegante de sucesso
+                icone.className = "modal-icon sucesso";
+                icone.innerHTML = `
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                        <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                    </svg>
+                `;
+                titulo.textContent = "Solicitação Enviada!";
+                texto.textContent = `Sua mensagem foi enviada com sucesso para ${nome}. Fique atento ao seu telefone ou e-mail cadastrado para o retorno!`;
+                
+                botoes.innerHTML = `
+                    <button class="btn-modal-principal" onclick="fecharModal()">Entendido</button>
+                `;
+            }
+
+            // Ativa e renderiza o modal na tela
+            modal.classList.add('ativo');
+        }
+
+        /* ==========================================================
+           CONTROLE DE CONTA DO USUÁRIO (LOCAL STORAGE) INTEGRADO
+           ========================================================== */
+        document.addEventListener('DOMContentLoaded', function() {
+            obterDadosProfissionais();
+
+            const userBtn = document.getElementById('userBtnMenu');
+            const userBtnContent = document.getElementById('userBtnContent');
+            const dropdownContent = document.getElementById('userDropdownContent');
+            
+            const linkEntrar = document.getElementById('linkEntrar');
+            const linkMinhaConta = document.getElementById('linkMinhaConta');
+            const linkSair = document.getElementById('linkSair');
+
+            const usuario = localStorage.getItem('usuarioLogado');
+
+            if (usuario && userBtnContent) {
+                const inicial = usuario.trim().charAt(0).toUpperCase();
+                userBtnContent.innerHTML = `<span class="user-initials">${inicial}</span>`;
+                
+                if(linkEntrar) linkEntrar.style.display = 'none';
+                if(linkMinhaConta) linkMinhaConta.style.display = 'block';
+                if(linkSair) linkSair.style.display = 'block';
+            }
+
+            if (userBtn && dropdownContent) {
+                userBtn.addEventListener('click', function(event) {
+                    event.stopPropagation();
+                    dropdownContent.classList.toggle('active');
+                });
+
+                document.addEventListener('click', function(event) {
+                    if (!userBtn.contains(event.target) && !dropdownContent.contains(event.target)) {
+                        dropdownContent.classList.remove('active');
+                    }
+                });
+            }
+
+            if (linkSair) {
+                linkSair.addEventListener('click', function(event) {
+                    event.preventDefault();
+                    localStorage.removeItem('usuarioLogado');
+                    window.location.href = 'index.html';
+                });
+            }
+
+            // Fecha o modal se clicar fora do box branco
+            const modalContainer = document.getElementById('modalAjuda');
+            modalContainer.addEventListener('click', function(e) {
+                if(e.target === modalContainer) {
+                    fecharModal();
+                }
+            });
+        });
+    </script>
+</body>
+</html>

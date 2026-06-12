@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minha Conta - Pede Ajuda</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            transition: background-color 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease, transform 0.2s ease;
+        }
+
+        html {
+            font-size: 65%; /* ESCALA PADRÃO DO SEU PROJETO (1rem = 6.5px) */
+            background-color: #ffe0ce94;
+        }
+
+        body {
+            background-color: #ffe0ce94;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 4rem 2rem;
+            color: #231C19;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* ---- CONTAINER CENTRAL (PAINEL) ---- */
+        .painel-conta {
+            background: #FFFFFF;
+            width: 100%;
+            max-width: 65rem;
+            border-radius: 24px;
+            box-shadow: 0 15px 40px rgba(35, 28, 25, 0.08);
+            border-top: 6px solid #FF6B00; /* Laranja proeminente */
+            border-left: 1px solid rgba(235, 217, 200, 0.6);
+            border-right: 1px solid rgba(235, 217, 200, 0.6);
+            border-bottom: 1px solid rgba(235, 217, 200, 0.6);
+            padding: 4rem;
+            animation: fadeSlideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+        }
+
+        /* Efeito de blur no painel quando o modal abrir */
+        .blur-target {
+            transition: filter 0.3s ease;
+        }
+        body.modal-open .blur-target {
+            filter: blur(5px);
+        }
+
+        /* ---- TOPO DO PAINEL ---- */
+        .painel-header {
+            text-align: center;
+            margin-bottom: 3.5rem;
+        }
+
+        .avatar-usuario {
+            width: 8.5rem;
+            height: 8.5rem;
+            background: linear-gradient(135deg, #2A75D3 0%, #1A56A6 100%);
+            color: #FFFFFF;
+            font-size: 3.4rem;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            margin: 0 auto 1.5rem auto;
+            box-shadow: 0 8px 20px rgba(42, 117, 211, 0.25);
+            border: 3px solid #FFFFFF;
+        }
+
+        h1 {
+            color: #231C19;
+            font-size: 2.8rem;
+            font-weight: 800;
+            letter-spacing: -0.8px;
+            margin-bottom: 0.5rem;
+        }
+
+        .subtitulo {
+            font-size: 1.3rem;
+            color: #BAA18A;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* ---- BLOCOS DE INFORMAÇÃO GERAL ---- */
+        .info-grupo {
+            background: #FDF6F0;
+            border: 1px solid #F3E6DA;
+            border-radius: 16px;
+            padding: 2.5rem;
+            margin-bottom: 3rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        .info-item {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .info-item.full-width {
+            grid-column: span 2;
+            border-bottom: 1px dashed #EBD9C8;
+            padding-bottom: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .info-label {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: #BAA18A;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.4rem;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .badge-seguranca {
+            background-color: rgba(42, 117, 211, 0.1);
+            color: #2A75D3;
+            font-size: 0.9rem;
+            padding: 0.1rem 0.6rem;
+            border-radius: 4px;
+            font-weight: 700;
+        }
+
+        .info-valor {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #3F3530;
+        }
+
+        /* ---- SEÇÃO DE AÇÕES ---- */
+        .acoes-container {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            border-top: 2px dashed #EBD9C8;
+            padding-top: 3rem;
+        }
+
+        .btn-voltar {
+            width: 100%;
+            padding: 1.4rem;
+            background-color: #231C19;
+            color: #FFFFFF;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.35rem;
+            font-weight: 700;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+            box-shadow: 0 4px 12px rgba(35, 28, 25, 0.1);
+        }
+
+        .btn-voltar:hover {
+            background-color: #453930;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 18px rgba(35, 28, 25, 0.2);
+        }
+
+        .btn-apagar {
+            width: 100%;
+            padding: 1.4rem;
+            background: transparent;
+            color: #C62828;
+            border: 2px solid rgba(198, 40, 40, 0.2);
+            border-radius: 12px;
+            font-size: 1.35rem;
+            font-weight: 700;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+
+        .btn-apagar:hover {
+            background-color: #FFF5F5;
+            border-color: #C62828;
+        }
+
+        /* ---- INTERFACE DO MODAL DE EXCLUSÃO (NOVO) ---- */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(35, 28, 25, 0.4);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .modal-container {
+            background: #FFFFFF;
+            width: 90%;
+            max-width: 460px;
+            border-radius: 24px;
+            padding: 3.5rem;
+            box-shadow: 0 25px 55px rgba(35, 28, 25, 0.2);
+            border-top: 6px solid #C62828; /* Alerta vermelho */
+            text-align: center;
+            transform: translateY(-30px);
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .modal-overlay.active .modal-container {
+            transform: translateY(0);
+        }
+
+        .modal-icon {
+            font-size: 4.5rem;
+            margin-bottom: 1.5rem;
+            animation: pulseWarning 1.5s infinite;
+        }
+
+        .modal-title {
+            font-size: 2.1rem;
+            font-weight: 800;
+            color: #231C19;
+            margin-bottom: 1rem;
+            letter-spacing: -0.5px;
+        }
+
+        .modal-text {
+            font-size: 1.35rem;
+            color: #6B5E59;
+            line-height: 1.6;
+            margin-bottom: 2.5rem;
+        }
+
+        .modal-botoes {
+            display: flex;
+            gap: 12px;
+        }
+
+        .btn-modal {
+            flex: 1;
+            padding: 1.3rem;
+            border-radius: 12px;
+            font-size: 1.3rem;
+            font-weight: 700;
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn-modal-cancelar {
+            background-color: #F3E6DA;
+            color: #5C4E48;
+        }
+
+        .btn-modal-cancelar:hover {
+            background-color: #EBD9C8;
+            transform: translateY(-1px);
+        }
+
+        .btn-modal-confirmar {
+            background-color: #C62828;
+            color: #FFFFFF;
+            box-shadow: 0 4px 12px rgba(198, 40, 40, 0.2);
+        }
+
+        .btn-modal-confirmar:hover {
+            background-color: #B71C1C;
+            transform: translateY(-1px);
+            box-shadow: 0 6px 15px rgba(198, 40, 40, 0.3);
+        }
+
+        /* ---- ANIMAÇÕES ---- */
+        @keyframes fadeSlideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes pulseWarning {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.08); }
+            100% { transform: scale(1); }
+        }
+
+        /* RESPONSIVIDADE */
+        @media (max-width: 600px) {
+            .painel-conta { padding: 2.5rem 2rem; }
+            .info-grupo { grid-template-columns: 1fr; gap: 1.8rem; padding: 2rem 1.5rem; }
+            .info-item.full-width { grid-column: span 1; }
+            h1 { font-size: 2.4rem; }
+            .modal-botoes { flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="painel-conta blur-target">
+        <div class="painel-header">
+            <div class="avatar-usuario" id="userAvatar">U</div>
+            <h1 id="userNome">Carregando...</h1>
+            <div class="subtitulo">Painel de Segurança do Usuário</div>
+        </div>
+
+        <div class="info-grupo">
+            <div class="info-item full-width">
+                <span class="info-label">Nome Completo</span>
+                <span class="info-valor" id="lblNome">---</span>
+            </div>
+
+            <div class="info-item">
+                <span class="info-label">E-mail <span class="badge-seguranca">Protegido</span></span>
+                <span class="info-valor" id="lblEmail">---</span>
+            </div>
+
+            <div class="info-item">
+                <span class="info-label">CPF <span class="badge-seguranca">Censurado</span></span>
+                <span class="info-valor" id="lblCPF">---</span>
+            </div>
+
+            <div class="info-item">
+                <span class="info-label">Telefone</span>
+                <span class="info-valor" id="lblTelefone">---</span>
+            </div>
+
+            <div class="info-item">
+                <span class="info-label">Cidade</span>
+                <span class="info-valor" id="lblCidade">---</span>
+            </div>
+
+            <div class="info-item full-width" style="border:none; padding:0; margin:0;">
+                <span class="info-label">CEP Cadastrado</span>
+                <span class="info-valor" id="lblCEP">---</span>
+            </div>
+        </div>
+
+        <div class="acoes-container">
+            <button class="btn-voltar" onclick="window.location.href='index.html'">← Voltar para a Página Inicial</button>
+            <button class="btn-apagar" onclick="abrirModalExclusao()">Excluir Minha Conta Permanentemente</button>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="modalExclusao">
+        <div class="modal-container">
+            <div class="modal-icon">⚠️</div>
+            <h2 class="modal-title" id="modalTitulo">Excluir Conta?</h2>
+            <p class="modal-text" id="modalTexto">Você tem certeza de que deseja apagar a sua conta? Todos os seus dados salvos e solicitações serão completamente removidos de nossa base de dados.</p>
+            <div class="modal-botoes">
+                <button class="btn-modal btn-modal-cancelar" onclick="fecharModalExclusao()">Não, Cancelar</button>
+                <button class="btn-modal btn-modal-confirmar" id="btnConfirmarExclusao">Sim, Excluir</button>
+            </div>
+        </div>
+    </div>
+
+<script>
+    const API_URL = "http://localhost:3000/api/perfil";
+    const usuarioLogadoId = localStorage.getItem('usuarioLogadoId'); 
+
+    // Controle de fluxo das etapas de confirmação do modal
+    let etapaConfirmacao = 1;
+
+    async function carregarDadosPainel() {
+        if (!usuarioLogadoId) {
+            alert("Acesso negado! Por favor, faça o login para acessar sua conta.");
+            window.location.href = 'index.html';
+            return;
+        }
+
+        try {
+            const resposta = await fetch(`${API_URL}/${usuarioLogadoId}`);
+            if (!resposta.ok) throw new Error("Não foi possível carregar os dados.");
+
+            const dadosDoBanco = await resposta.json();
+
+            document.getElementById('userAvatar').textContent = dadosDoBanco.nome.trim().charAt(0).toUpperCase();
+            document.getElementById('userNome').textContent = dadosDoBanco.nome;
+            document.getElementById('lblNome').textContent = dadosDoBanco.nome;
+            document.getElementById('lblTelefone').textContent = dadosDoBanco.telefone || "Não cadastrado";
+            document.getElementById('lblCidade').textContent = dadosDoBanco.cidade || "Não cadastrada";
+            document.getElementById('lblCEP').textContent = dadosDoBanco.cep || "Não cadastrado";
+
+            document.getElementById('lblEmail').textContent = censurarEmail(dadosDoBanco.email);
+            document.getElementById('lblCPF').textContent = censurarCPF(dadosDoBanco.cpf);
+
+        } catch (erro) {
+            console.error("Erro na requisição:", erro);
+            window.location.href = 'index.html';
+        }
+    }
+
+    function censurarEmail(email) {
+        if (!email) return "---";
+        const partes = email.split('@');
+        return partes[0].substring(0, 4) + "******" + "@" + partes[1];
+    }
+
+    function censurarCPF(cpf) {
+        if (!cpf) return "---";
+        const limpo = cpf.replace(/\D/g, '');
+        if(limpo.length !== 11) return "###.###.###-##";
+        return `***.${limpo.substring(3, 6)}.${limpo.substring(6, 9)}-**`;
+    }
+
+    /* ========================================== */
+    /* LOGICA DO MODAL DE EXCLUSÃO INTERATIVO     */
+    /* ========================================== */
+    const modal = document.getElementById('modalExclusao');
+    const btnConfirmar = document.getElementById('btnConfirmarExclusao');
+
+    function abrirModalExclusao() {
+        etapaConfirmacao = 1;
+        document.getElementById('modalTitulo').textContent = "Excluir Conta?";
+        document.getElementById('modalTexto').textContent = "Você tem certeza de que deseja apagar a sua conta? Todos os seus dados salvos serão removidos.";
+        btnConfirmar.textContent = "Sim, Excluir";
+        
+        modal.classList.add('active');
+        document.body.classList.add('modal-open');
+    }
+
+    function fecharModalExclusao() {
+        modal.classList.remove('active');
+        document.body.classList.remove('modal-open');
+    }
+
+    // Configura o evento do botão de confirmação dentro do modal
+    btnConfirmar.addEventListener('click', async () => {
+        if (etapaConfirmacao === 1) {
+            // Avança para o segundo aviso de segurança na interface bonita
+            etapaConfirmacao = 2;
+            document.getElementById('modalTitulo').textContent = "⚠️ Ação Irreversível!";
+            document.getElementById('modalTexto').textContent = "Último aviso: Esta ação não poderá ser desfeita. Confirma a remoção permanente de todos os seus registros?";
+            btnConfirmar.textContent = "Apagar Definitivamente";
+        } else {
+            // Executa a deleção real após a segunda confirmação
+            executarDelecaoBanco();
+        }
+    });
+
+    async function executarDelecaoBanco() {
+        try {
+            const resposta = await fetch(`${API_URL}/${usuarioLogadoId}`, {
+                method: 'DELETE'
+            });
+
+            if (resposta.ok) {
+                localStorage.removeItem('usuarioLogado');
+                localStorage.removeItem('usuarioLogadoId');
+                localStorage.removeItem('usuarioLogadoNome');
+                
+                // Transforma o modal em mensagem de sucesso antes de fechar
+                document.getElementById('modalTitulo').textContent = "🎉 Conta Removida";
+                document.getElementById('modalTexto').textContent = "Sua conta foi completamente excluída com sucesso.";
+                document.querySelector('.modal-botoes').style.display = 'none';
+                
+                setTimeout(() => {
+                    fecharModalExclusao();
+                    window.location.href = 'index.html';
+                }, 2500);
+            } else {
+                alert("Erro técnico do servidor ao tentar deletar.");
+                fecharModalExclusao();
+            }
+        } catch (erro) {
+            console.error(erro);
+            alert("Erro de conexão ao tentar deletar a conta.");
+            fecharModalExclusao();
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', carregarDadosPainel);
+</script>
+</body>
+</html>

@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastrar Cliente - Pede Ajuda</title>
+    <style>
+        :root {
+            --accent: #E65C00;
+            --accent-gradient: linear-gradient(135deg, #FF7A1A 0%, #E65C00 100%);
+            --accent-blue: #0A66C2;
+            --bg-body: #F3EAE0; 
+            --white: #ffffff;
+            --muted: #F7EFE5;
+            --muted-2: #EFE4DA;
+            --success: #2E7D32;
+            --error: #C62828;
+            --dark-text: #231C19;
+            --input-border: #D6C7BC;
+        }
+
+        * {
+            box-sizing: border-box;
+            transition: background-color 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease, transform 0.2s ease;
+        }
+
+        html, body { height: 100%; margin: 0; padding: 0; }
+
+        body {
+            font-family: Inter, system-ui, -apple-system, sans-serif;
+            background: var(--bg-body);
+            color: var(--dark-text);
+            display: flex;
+            flex-direction: column;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* CONTAINER MASTER MÓDULO GERAL */
+        .main-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: start;
+            padding: 51px 17px;
+            width: 100%;
+        }
+
+        /* ESTRUTURA DOS CONTAINERS EM CARDS */
+        .card {
+            background: var(--white);
+            width: 100%;
+            max-width: 680px;
+            border-radius: 24px;
+            box-shadow: 0 17px 43px rgba(35, 28, 25, 0.05), 0 3px 10px rgba(35, 28, 25, 0.02);
+            border: 1px solid rgba(230, 92, 0, 0.04);
+            padding: 43px;
+            z-index: 1;
+        }
+
+        .card-header {
+            display: flex;
+            flex-direction: column;
+            gap: 9px;
+            margin-bottom: 34px;
+            text-align: center; 
+        }
+
+        h1 {
+            color: var(--dark-text);
+            margin: 0;
+            font-size: 1.87rem;
+            font-weight: 800;
+            letter-spacing: -0.68px;
+        }
+        h1::after { content: '.'; color: var(--accent); }
+
+        .subtitle {
+            color: #6B5E59;
+            font-size: 0.89rem;
+            font-weight: 400;
+        }
+
+        fieldset {
+            border: 0;
+            padding: 0;
+            margin: 0;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .full { grid-column: 1 / -1; }
+
+        label {
+            display: block;
+            font-size: 0.72rem;
+            margin-bottom: 7px;
+            color: #5C4E48;
+            font-weight: 600;
+            letter-spacing: -0.1px;
+        }
+
+        input[type=text], input[type=email], input[type=tel] {
+            width: 100%;
+            padding: 12px 15px;
+            border-radius: 10px;
+            border: 1px solid var(--input-border);
+            background: #fff;
+            font-size: 0.81rem;
+            color: var(--dark-text);
+            outline: none;
+            font-family: inherit;
+        }
+
+        input:focus {
+            box-shadow: 0 0 0 3px rgba(255, 122, 26, 0.12);
+            border-color: var(--accent);
+        }
+
+        .submit-btn {
+            grid-column: 1 / -1;
+            background: var(--accent-gradient);
+            color: var(--white);
+            border: 0;
+            padding: 15px 26px;
+            border-radius: 99px; 
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 5px 21px rgba(230, 92, 0, 0.25);
+            width: 100%;
+            font-size: 0.85rem;
+            margin-top: 21px;
+            text-transform: uppercase;
+            letter-spacing: 0.68px;
+        }
+        .submit-btn:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 9px 26px rgba(230, 92, 0, 0.35);
+        }
+        .submit-btn:disabled {
+            opacity: 0.45;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+
+        /* FOOTER DE ENLACES EXTERNOS */
+        .page-links {
+            display: flex;
+            gap: 14px;
+            justify-content: center;
+            margin-top: 30px;
+            width: 100%;
+            max-width: 680px;
+        }
+
+        .page-links a, .page-links button {
+            padding: 12px 24px;
+            border-radius: 99px;
+            text-decoration: none;
+            border: 1px solid rgba(35, 28, 25, 0.1);
+            color: #5C4E48;
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(10px);
+            font-weight: 600;
+            font-size: 12.3px;
+            text-align: center;
+            flex: 1;
+            box-shadow: 0 3px 10px rgba(35, 28, 25, 0.02);
+            cursor: pointer;
+            font-family: inherit;
+        }
+        .page-links .primary {
+            background: #fff;
+            color: var(--accent);
+            border: 1px solid rgba(230, 92, 0, 0.3);
+        }
+        .page-links .info-blue {
+            background: #fff;
+            color: var(--accent-blue);
+            border: 1px solid rgba(10, 102, 194, 0.25);
+        }
+        .page-links a:hover, .page-links button:hover {
+            transform: translateY(-2px);
+            background: #fff;
+            box-shadow: 0 5px 13px rgba(35, 28, 25, 0.06);
+        }
+        .page-links .primary:hover {
+            border-color: var(--accent);
+            background: rgba(255, 122, 26, 0.04);
+        }
+        .page-links .info-blue:hover {
+            border-color: var(--accent-blue);
+            background: rgba(10, 102, 194, 0.04);
+        }
+
+        /* CONTAINER OVERLAY MODAL DE LOGIN (OCULTO POR PADRÃO) */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(35, 28, 25, 0.25);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .modal-container {
+            background: var(--white);
+            width: 90%;
+            max-width: 440px;
+            border-radius: 24px;
+            padding: 35px;
+            box-shadow: 0 25px 55px rgba(0, 0, 0, 0.15);
+            border: 1px solid var(--muted-2);
+            position: relative;
+            transform: translateY(-20px);
+            transition: transform 0.3s ease;
+        }
+
+        .modal-overlay.active .modal-container {
+            transform: translateY(0);
+        }
+
+        /* BOTÃO INTERNO DE FECHAMENTO "X" */
+        .close-modal-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: var(--muted);
+            border: none;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--dark-text);
+            font-weight: bold;
+            font-size: 14px;
+        }
+        .close-modal-btn:hover {
+            background: var(--muted-2);
+            color: var(--error);
+            transform: scale(1.05);
+        }
+
+        .modal-header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .modal-title {
+            font-size: 1.4rem;
+            font-weight: 800;
+            margin: 0 0 6px 0;
+        }
+        .modal-title::after { content: '.'; color: var(--accent-blue); }
+
+        .modal-inputs-stack {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .login-submit-btn {
+            background: var(--accent-blue);
+            color: var(--white);
+            border: 0;
+            padding: 14px;
+            border-radius: 99px;
+            font-weight: 700;
+            font-size: 0.85rem;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-top: 10px;
+            box-shadow: 0 5px 15px rgba(10, 102, 194, 0.2);
+        }
+        .login-submit-btn:hover {
+            background: #08529c;
+            transform: translateY(-1px);
+            box-shadow: 0 7px 20px rgba(10, 102, 194, 0.3);
+        }
+
+        /* BLUR DINÂMICO PARA ELEMENTOS DE FUNDO */
+        .blur-target {
+            transition: filter 0.3s ease;
+        }
+        body.modal-open .blur-target {
+            filter: blur(4px);
+        }
+
+        /* TERMOS — CHECKBOX */
+        .termos-row {
+            grid-column: 1 / -1;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            margin-top: 4px;
+        }
+        .termos-row input[type=checkbox] {
+            width: 17px;
+            height: 17px;
+            min-width: 17px;
+            margin-top: 2px;
+            accent-color: var(--accent);
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        .termos-row .termos-label {
+            font-size: 0.78rem;
+            color: #5C4E48;
+            font-weight: 500;
+            line-height: 1.5;
+            margin: 0;
+            cursor: default;
+        }
+        .termos-row .termos-label .termos-link {
+            color: var(--accent);
+            font-weight: 700;
+            cursor: pointer;
+            text-decoration: underline;
+            text-underline-offset: 2px;
+            background: none;
+            border: none;
+            padding: 0;
+            font-family: inherit;
+            font-size: inherit;
+        }
+        .termos-row .termos-label .termos-link:hover {
+            color: #c24d00;
+        }
+
+        /* TERMOS — MODAL */
+        .modal-termos-container {
+            max-width: 620px;
+            max-height: 85vh;
+            display: flex;
+            flex-direction: column;
+        }
+        .modal-termos-body {
+            overflow-y: auto;
+            flex: 1;
+            padding-right: 6px;
+            margin-top: 16px;
+            font-size: 0.8rem;
+            line-height: 1.7;
+            color: #3D2F2A;
+        }
+        .modal-termos-body::-webkit-scrollbar { width: 5px; }
+        .modal-termos-body::-webkit-scrollbar-track { background: var(--muted); border-radius: 99px; }
+        .modal-termos-body::-webkit-scrollbar-thumb { background: var(--input-border); border-radius: 99px; }
+        .modal-termos-body h3 {
+            font-size: 0.82rem;
+            font-weight: 700;
+            color: var(--dark-text);
+            margin: 18px 0 4px 0;
+        }
+        .modal-termos-body h3:first-child { margin-top: 0; }
+        .modal-termos-body p { margin: 0 0 8px 0; }
+        .modal-termos-accept-btn {
+            margin-top: 20px;
+            background: var(--accent-gradient);
+            color: var(--white);
+            border: 0;
+            padding: 13px;
+            border-radius: 99px;
+            font-weight: 700;
+            font-size: 0.82rem;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            box-shadow: 0 5px 15px rgba(230, 92, 0, 0.2);
+            width: 100%;
+            flex-shrink: 0;
+        }
+        .modal-termos-accept-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 7px 20px rgba(230, 92, 0, 0.3);
+        }
+        /* título do modal de termos usa cor accent, não blue */
+        #modalTermos .modal-title::after { color: var(--accent); }
+
+        @media (max-width: 768px) {
+            .main-container { padding: 26px 14px; }
+            .card { padding: 26px 17px; border-radius: 17px; }
+            fieldset { grid-template-columns: 1fr; gap: 15px; }
+            .page-links { flex-direction: column; gap: 10px; }
+            .modal-container { padding: 25px 20px; }
+            .modal-termos-container { max-height: 90vh; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="main-container blur-target">
+        <div class="card">
+            <div class="card-header">
+                <h1>Cadastrar conta</h1>
+                <div class="subtitle">Preencha suas informações de cliente abaixo.</div>
+            </div>
+
+            <form id="formCadastroCliente">
+                <fieldset>
+                    <div>
+                        <label for="nome">Seu Nome completo</label>
+                        <input id="nome" name="nome" type="text" placeholder="Ex: Maria Souza" required>
+                    </div>
+                    <div>
+                        <label for="cpf">Seu CPF</label>
+                        <input id="cpf" name="cpf" type="text" maxlength="14" placeholder="000.000.000-00" required>
+                    </div>
+                    <div>
+                        <label for="telefone">Telefone de contato</label>
+                        <input id="telefone" name="telefone" type="tel" maxlength="15" placeholder="(00) 00000-0000" required>
+                    </div>
+                    <div>
+                        <label for="email">E-mail</label>
+                        <input id="email" name="email" type="email" placeholder="seuemail@email.com" required>
+                    </div>
+                    <div class="full">
+                        <label for="cidade">Cidade / Bairro</label>
+                        <input id="cidade" name="cidade" type="text" placeholder="Ex: Centro" required>
+                    </div>
+                    <div class="full">
+                        <label for="cep">CEP</label>
+                        <input id="cep" name="cep" type="text" maxlength="9" placeholder="00000-000" required>
+                    </div>
+
+                    <!-- TERMOS DE SERVIÇO -->
+                    <div class="termos-row full">
+                        <input type="checkbox" id="aceitaTermos" name="aceitaTermos">
+                        <span class="termos-label">
+                            Li e concordo com os
+                            <button type="button" class="termos-link" id="openTermosBtn">Termos de Serviço</button>
+                            do Pede Ajuda.
+                        </span>
+                    </div>
+                    
+                    <button class="submit-btn full" type="submit" id="submitCadastroBtn" disabled>Confirmar Cadastro</button>
+                </fieldset>
+            </form>
+        </div>
+
+        <div class="page-links">
+            <a href="index.html">Voltar à tela inicial</a>
+            <button type="button" class="info-blue" id="openLoginModalBtn">Já possuo uma conta</button>
+            <a class="primary" href="Profissional.html">Cadastro Profissional</a>
+        </div>
+    </div>
+
+    <!-- MODAL LOGIN -->
+    <div class="modal-overlay" id="loginModal">
+        <div class="modal-container">
+            <button class="close-modal-btn" id="closeLoginModalBtn" aria-label="Fechar Janela">✕</button>
+            
+            <div class="modal-header">
+                <h2 class="modal-title">Acessar Conta</h2>
+                <div class="subtitle" style="font-size: 0.8rem; margin-top: 4px;">Insira os dados cadastrados para validar seu acesso.</div>
+            </div>
+
+            <form id="formLoginCliente">
+                <div class="modal-inputs-stack">
+                    <div>
+                        <label for="loginNome">Nome Completo</label>
+                        <input id="loginNome" name="nome" type="text" placeholder="Ex: Maria Souza" required>
+                    </div>
+                    <div>
+                        <label for="loginCpf">CPF Registrado</label>
+                        <input id="loginCpf" name="cpf" type="text" maxlength="14" placeholder="000.000.000-00" required>
+                    </div>
+                    <button type="submit" class="login-submit-btn">Efetuar Login</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL TERMOS DE SERVIÇO -->
+    <div class="modal-overlay" id="modalTermos">
+        <div class="modal-container modal-termos-container">
+            <button class="close-modal-btn" id="closeTermosBtn" aria-label="Fechar Termos">✕</button>
+
+            <div class="modal-header">
+                <h2 class="modal-title">Termos de Serviço</h2>
+                <div class="subtitle" style="font-size: 0.78rem; margin-top: 4px;">Última atualização: 08 de junho de 2026</div>
+            </div>
+
+            <div class="modal-termos-body">
+                <h3>1. Introdução</h3>
+                <p>Bem-vindo ao Pede Ajuda. Nossa plataforma foi desenvolvida para conectar pessoas que precisam de serviços técnicos a profissionais qualificados em áreas como informática, manutenção de computadores, ar-condicionado, elétrica, hidráulica, eletrodomésticos e outros serviços similares. Ao acessar ou utilizar o Pede Ajuda, você declara que leu, compreendeu e concorda com estes Termos de Serviço.</p>
+
+                <h3>2. Sobre a Plataforma</h3>
+                <p>O Pede Ajuda atua como uma plataforma de intermediação entre clientes e prestadores de serviços. Não realizamos os serviços anunciados nem participamos diretamente da execução dos trabalhos contratados. Nossa função é disponibilizar ferramentas que facilitem a comunicação, contratação, pagamento e avaliação dos serviços oferecidos pelos profissionais cadastrados.</p>
+
+                <h3>3. Cadastro e Conta</h3>
+                <p>Para utilizar determinadas funcionalidades da plataforma, poderá ser necessário criar uma conta. O usuário é responsável por fornecer informações verdadeiras, completas e atualizadas, bem como por manter a segurança de suas credenciais de acesso. O fornecimento de informações falsas, enganosas ou desatualizadas poderá resultar na suspensão ou encerramento da conta, sem prejuízo das medidas legais cabíveis.</p>
+
+                <h3>4. Serviços Prestados e Pagamentos</h3>
+                <p>Os serviços oferecidos por meio da plataforma são de responsabilidade exclusiva dos prestadores cadastrados. Quando um cliente contratar um serviço e realizar o pagamento através do Pede Ajuda, o valor ficará temporariamente retido pela plataforma até a conclusão do serviço.</p>
+                <p>Após a finalização do trabalho, o cliente terá até 7 (sete) dias úteis para solicitar reembolso ou contestar a prestação do serviço, apresentando justificativas e evidências que fundamentem sua solicitação. Durante esse período, o pagamento permanecerá bloqueado e não será liberado ao prestador de serviço.</p>
+                <p>Caso não haja solicitação de reembolso dentro do prazo estabelecido, ou após a resolução de eventual disputa, o pagamento será liberado ao prestador de serviço. O Pede Ajuda poderá solicitar documentos, imagens, mensagens ou outras evidências necessárias para analisar conflitos e solicitações de reembolso.</p>
+
+                <h3>5. Conduta dos Usuários</h3>
+                <p>Ao utilizar a plataforma, você concorda em agir de forma ética, respeitosa e em conformidade com a legislação aplicável. É proibido utilizar o Pede Ajuda para atividades fraudulentas, ilegais, ofensivas, abusivas ou que possam causar prejuízos a outros usuários ou à própria plataforma.</p>
+
+                <h3>6. Avaliações e Conteúdo</h3>
+                <p>Os usuários poderão publicar avaliações, comentários e opiniões sobre serviços realizados. Todo conteúdo publicado deve ser verdadeiro, respeitoso e não pode violar direitos de terceiros, incluindo direitos autorais, privacidade ou imagem. O Pede Ajuda poderá remover conteúdos que considere inadequados, ofensivos ou contrários a estes Termos de Serviço.</p>
+
+                <h3>7. Limitação de Responsabilidade</h3>
+                <p>O Pede Ajuda não é parte dos contratos firmados entre clientes e prestadores de serviço. Dessa forma, não garantimos a qualidade, prazo, resultado, disponibilidade ou garantia dos serviços oferecidos pelos profissionais cadastrados. Embora a plataforma possa atuar na retenção temporária de pagamentos e na análise de solicitações de reembolso, não garantimos que disputas entre clientes e prestadores serão resolvidas em favor de qualquer das partes, comprometendo-nos apenas a analisar as informações disponíveis de forma razoável e imparcial.</p>
+
+                <h3>8. Suspensão e Encerramento de Contas</h3>
+                <p>O Pede Ajuda poderá suspender, restringir ou encerrar contas que violem estes Termos de Serviço, pratiquem atividades fraudulentas ou representem riscos à segurança da plataforma e de seus usuários.</p>
+
+                <h3>9. Alterações nos Termos</h3>
+                <p>Estes Termos poderão ser atualizados periodicamente para refletir alterações na legislação, melhorias da plataforma ou a implementação de novos recursos. As versões atualizadas entrarão em vigor a partir de sua publicação no Pede Ajuda.</p>
+
+                <h3>10. Disposições Finais</h3>
+                <p>Ao utilizar o Pede Ajuda, você concorda integralmente com estes Termos de Serviço. Caso não concorde com qualquer disposição aqui apresentada, recomendamos que interrompa a utilização da plataforma.</p>
+                <p><em>Pede Ajuda — Quem pede, pede ajuda. Resolva seus problemas com mais praticidade e agilidade.</em></p>
+            </div>
+
+            <button type="button" class="modal-termos-accept-btn" id="aceitarTermosBtn">Li e Aceito os Termos</button>
+        </div>
+    </div>
+
+<script>
+    /* ========================================== */
+    /* CONFIGURAÇÃO DAS MÁSCARAS DE INPUT          */
+    /* ========================================== */
+    const aplicarMascara = (input, funcaoMascara) => {
+        if(!input) return;
+        input.addEventListener('input', (e) => {
+            e.target.value = funcaoMascara(e.target.value);
+        });
+    };
+
+    const mCPF = (value) => {
+        return value.replace(/\D/g, '').replace(/(\d{3})(\d)/, '$1.$2').replace(/(\d{3})(\d)/, '$1.$2').replace(/(\d{3})(\d{1,2})$/, '$1-$2');
+    };
+
+    const mTel = (value) => {
+        return value.replace(/\D/g, '').replace(/^(\d{2})(\d)/g, '($1) $2').replace(/(\d{5})(\d)/, '$1-$2').substring(0, 15);
+    };
+
+    const mCEP = (value) => {
+        return value.replace(/\D/g, '').replace(/^(\d{5})(\d)/, '$1-$2');
+    };
+
+    aplicarMascara(document.getElementById('cpf'), mCPF);
+    aplicarMascara(document.getElementById('loginCpf'), mCPF);
+    aplicarMascara(document.getElementById('telefone'), mTel);
+    aplicarMascara(document.getElementById('cep'), mCEP);
+
+    /* ========================================== */
+    /* GERENCIADOR DO MODAL COM ANIMAÇÃO E BLUR   */
+    /* ========================================== */
+    const loginModal = document.getElementById('loginModal');
+    const openLoginModalBtn = document.getElementById('openLoginModalBtn');
+    const closeLoginModalBtn = document.getElementById('closeLoginModalBtn');
+
+    openLoginModalBtn.addEventListener('click', () => {
+        loginModal.classList.add('active');
+        document.body.classList.add('modal-open');
+    });
+
+    const fecharModal = () => {
+        loginModal.classList.remove('active');
+        document.body.classList.remove('modal-open');
+    };
+
+    closeLoginModalBtn.addEventListener('click', fecharModal);
+    
+    loginModal.addEventListener('click', (e) => {
+        if (e.target === loginModal) fecharModal();
+    });
+
+    /* ========================================== */
+    /* CAIXA DE AVISOS FLUTUANTES (TOAST)        */
+    /* ========================================== */
+    function mostrarAvisoFlutuante(mensagem, corSucesso) {
+        const aviso = document.createElement('div');
+        aviso.style.position = 'fixed';
+        aviso.style.top = '17px';
+        aviso.style.left = '50%';
+        aviso.style.transform = 'translateX(-50%)';
+        aviso.style.backgroundColor = corSucesso ? '#2E7D32' : '#C62828';
+        aviso.style.color = '#ffffff';
+        aviso.style.padding = '14px 27px';
+        aviso.style.borderRadius = '99px';
+        aviso.style.fontWeight = '600';
+        aviso.style.fontSize = '0.89rem';
+        aviso.style.boxShadow = '0 9px 21px rgba(35, 28, 25, 0.2)';
+        aviso.style.zIndex = '20000';
+        aviso.style.fontFamily = 'system-ui, sans-serif';
+        aviso.textContent = mensagem;
+
+        document.body.appendChild(aviso);
+        setTimeout(() => { aviso.remove(); }, 3500);
+    }
+
+    /* ========================================== */
+    /* SUBMISSÃO ASSÍNCRONA: NOVO CADASTRO        */
+    /* ========================================== */
+    document.getElementById('formCadastroCliente').addEventListener('submit', async function(event) {
+        event.preventDefault();
+        const formData = new FormData(this);
+        const dados = Object.fromEntries(formData.entries());
+
+        try {
+            const response = await fetch('/api/cadastrar-cliente', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(dados)
+            });
+
+            const resultado = await response.json();
+
+            if (response.ok) {
+                // Se o seu backend retornar o ID gerado no objeto resultado (ex: resultado.clienteId ou resultado.id)
+                // Ajuste aqui se a propriedade do banco tiver outro nome
+                const idCliente = resultado.clienteId || resultado.id || "1";
+
+                localStorage.setItem('usuarioLogado', dados.nome);
+                localStorage.setItem('usuarioLogadoId', idCliente);
+                
+                mostrarAvisoFlutuante('🎉 Conta de cliente cadastrada com sucesso!', true);
+                this.reset();
+                
+                // Redireciona direto para o painel da conta logada
+                setTimeout(() => { window.location.href = 'minhaconta.html'; }, 1800);
+            } else {
+                mostrarAvisoFlutuante('⚠️ Erro: ' + (resultado.erro || 'Falha ao salvar registro.'), false);
+            }
+        } catch (error) {
+            mostrarAvisoFlutuante('❌ Falha de conexão com o servidor.', false);
+        }
+    });
+
+    /* ========================================== */
+    /* SUBMISSÃO ASSÍNCRONA: SISTEMA DE LOGIN     */
+    /* ========================================== */
+    document.getElementById('formLoginCliente').addEventListener('submit', async function(event) {
+        event.preventDefault();
+        const formData = new FormData(this);
+        const dados = Object.fromEntries(formData.entries());
+
+        try {
+            const response = await fetch('/api/login-cliente', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(dados)
+            });
+
+            const resultado = await response.json();
+
+            if (response.ok) {
+                // 🌟 CORREÇÃO AQUI: Resgata o ID e o Nome estruturados vindos do seu backend
+                const nomeCliente = resultado.cliente.nome;
+                const idCliente = resultado.cliente.id; 
+
+                // Salva ambos os parâmetros cruciais no LocalStorage do navegador
+                localStorage.setItem('usuarioLogado', nomeCliente);
+                localStorage.setItem('usuarioLogadoId', idCliente);
+
+                mostrarAvisoFlutuante(`🔓 Bem-vindo de volta, ${nomeCliente}!`, true);
+                fecharModal();
+                this.reset();
+                
+                // Redireciona para a aba que agora vai identificar o ID perfeitamente
+                setTimeout(() => { window.location.href = 'minhaconta.html'; }, 1800);
+            } else {
+                mostrarAvisoFlutuante('❌ ' + (resultado.erro || 'Dados incorretos.'), false);
+            }
+        } catch (error) {
+            mostrarAvisoFlutuante('❌ Falha ao processar login com o servidor.', false);
+        }
+    });
+
+    /* ========================================== */
+    /* TERMOS DE SERVIÇO — MODAL + CHECKBOX       */
+    /* ========================================== */
+    const modalTermos     = document.getElementById('modalTermos');
+    const openTermosBtn   = document.getElementById('openTermosBtn');
+    const closeTermosBtn  = document.getElementById('closeTermosBtn');
+    const aceitarTermosBtn = document.getElementById('aceitarTermosBtn');
+    const checkboxTermos  = document.getElementById('aceitaTermos');
+    const submitBtn       = document.getElementById('submitCadastroBtn');
+
+    const abrirTermos = () => {
+        modalTermos.classList.add('active');
+        document.body.classList.add('modal-open');
+    };
+
+    const fecharTermos = () => {
+        modalTermos.classList.remove('active');
+        document.body.classList.remove('modal-open');
+    };
+
+    openTermosBtn.addEventListener('click', abrirTermos);
+    closeTermosBtn.addEventListener('click', fecharTermos);
+
+    modalTermos.addEventListener('click', (e) => {
+        if (e.target === modalTermos) fecharTermos();
+    });
+
+    // Botão "Li e Aceito" dentro do modal — marca checkbox e fecha
+    aceitarTermosBtn.addEventListener('click', () => {
+        checkboxTermos.checked = true;
+        submitBtn.disabled = false;
+        fecharTermos();
+        mostrarAvisoFlutuante('✅ Termos aceitos. Pode concluir o cadastro.', true);
+    });
+
+    // Checkbox manual também habilita/desabilita o botão
+    checkboxTermos.addEventListener('change', () => {
+        submitBtn.disabled = !checkboxTermos.checked;
+    });
+</script>          
+</body>
+</html>
