@@ -7,12 +7,12 @@ const app = express();
 // ✅ 1. PORTA DINÂMICA: Usa a porta fornecida pela hospedagem ou a 3000 localmente
 const PORT = process.env.PORT || 3000;
 
-// ✅ 2. CONFIGURAÇÕES DE MIDDLEWARES (Deixadas juntas no topo)
+// ✅ 2. CONFIGURAÇÕES DE MIDDLEWARES
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'site')));
 app.use(express.static(__dirname)); // Mantido caso tenha arquivos na raiz
 
-// ✅ 3. CAMINHO ABSOLUTO DO BANCO: Garante que a hospedagem encontre o arquivo .db sem problemas
+// ✅ 3. CAMINHO ABSOLUTO DO BANCO: Garante estabilidade na hospedagem
 const dbPath = path.join(__dirname, 'database.db');
 
 const db = new sqlite3.Database(dbPath, (err) => {
@@ -76,10 +76,10 @@ const db = new sqlite3.Database(dbPath, (err) => {
 });
 
 // ==================================================
-// ROTA PRINCIPAL
+// ROTA PRINCIPAL (Alterada para index.html 🚀)
 // ==================================================
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'site', 'site.html'));
+    res.sendFile(path.join(__dirname, 'site', 'index.html'));
 });
 
 // ==================================================
@@ -169,7 +169,7 @@ app.put('/api/perfil/:id', (req, res) => {
         if (this.changes === 0) {
             return res.status(404).json({ erro: 'Usuário não encontrado para atualização.' });
         }
-        res.json({ mensagem: 'Perfil updated com sucesso diretamente no banco de dados!' });
+        res.json({ mensagem: 'Perfil atualizado com sucesso diretamente no banco de dados!' });
     });
 });
 
