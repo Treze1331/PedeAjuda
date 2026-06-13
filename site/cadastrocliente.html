@@ -671,9 +671,9 @@
             const resultado = await response.json();
 
             if (response.ok) {
-                // 🌟 CORREÇÃO AQUI: Resgata o ID e o Nome estruturados vindos do seu backend
-                const nomeCliente = resultado.cliente.nome;
-                const idCliente = resultado.cliente.id; 
+                // 🌟 CORRIGIDO: Agora lê direto do resultado, combinando com o seu server.js
+                const nomeCliente = resultado.nome;
+                const idCliente = resultado.id; 
 
                 // Salva ambos os parâmetros cruciais no LocalStorage do navegador
                 localStorage.setItem('usuarioLogado', nomeCliente);
