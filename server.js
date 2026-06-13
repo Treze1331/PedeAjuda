@@ -110,6 +110,7 @@ app.post('/api/cadastrar-cliente', (req, res) => {
 });
 
 // ROTA POST: Validação de Login de Cliente
+// ROTA POST: Validação de Login de Cliente
 app.post('/api/login-cliente', (req, res) => {
     const { nome, cpf } = req.body;
 
@@ -126,7 +127,13 @@ app.post('/api/login-cliente', (req, res) => {
         if (!row) {
             return res.status(401).json({ erro: 'Nome ou CPF não correspondentes ou não cadastrados.' });
         }
-        res.json({ mensagem: 'Login efetuado com sucesso!', cliente: { nome: row.nome, id: row.id } });
+        
+        // 🔥 CORRIGIDO: Agora os dados vão direto na raiz do JSON
+        res.json({ 
+            mensagem: 'Login efetuado com sucesso!', 
+            id: row.id, 
+            nome: row.nome 
+        });
     });
 });
 
