@@ -483,6 +483,8 @@
             console.error(erro);
             alert("Erro de conexão ao tentar deletar a conta.");
             fecharModalExclusao();
+            console.error("Erro na requisição:", erro);
+            // window.location.href = 'index.html';  <-- Deixe comentada com //
         }
     }
 
