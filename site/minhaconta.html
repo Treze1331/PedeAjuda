@@ -372,7 +372,7 @@
     </div>
 
 <script>
-    const API_URL = "/api/perfil";
+    const API_URL = "http://localhost:3000/api/perfil";
     const usuarioLogadoId = localStorage.getItem('usuarioLogadoId'); 
 
     // Controle de fluxo das etapas de confirmação do modal
@@ -483,8 +483,6 @@
             console.error(erro);
             alert("Erro de conexão ao tentar deletar a conta.");
             fecharModalExclusao();
-            console.error("Erro na requisição:", erro);
-            // window.location.href = 'index.html';  <-- Deixe comentada com //
         }
     }
 
